@@ -11,9 +11,9 @@ const access = promisify(fs.access);
 const copy = promisify(ncp);
 
 async function copyTemplateFiles(options) {
- return copy(options.templateDirectory, options.targetDirectory, {
-   clobber: false,
- });
+  return copy(options.templateDirectory, options.targetDirectory, {
+    clobber: false,
+  });
 }
 
 async function initGit(options) {
@@ -34,7 +34,7 @@ export async function createProject(options) {
 
   const fullPathName = new URL(import.meta.url).pathname;
  const templateDir = path.resolve(
-    fullPathName.substr(fullPathName.indexOf('/')),
+    fullPathName.substr(fullPathName.indexOf('/')+1),
    '../../templates',
     options.template.toLowerCase()
  );

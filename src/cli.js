@@ -63,6 +63,7 @@ function parseArgumentsIntoOptions(rawArgs) {
 
  export async function cli(args) {
   let options = parseArgumentsIntoOptions(args);
+  // console.log(options)
   options = await promptForMissingOptions(options);
   await createProject(options);
 }
