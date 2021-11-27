@@ -75,6 +75,5 @@ function getCommandName(command) {
 export async function cli(args) {
   let options = parseArgumentsIntoOptions(args);
   options = await promptForMissingOptions(options);
-  // console.log(options);
   commandExec(options);
 }
