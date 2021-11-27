@@ -1,0 +1,40 @@
+{
+  "name": "@bachmateus/cli2",
+  "version": "1.0.0",
+  "description": "nothing yet",
+  "main": "src/index.js",
+  "bin": {
+    "@bachmateus/cli2": "bin/create-project",
+    "create-project": "bin/create-project"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cli",
+    "create-project"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "arg": "^5.0.1",
+    "chalk": "^4.1.2",
+    "covgen": "^3.1.0",
+    "esm": "^3.2.25",
+    "execa": "^6.0.0",
+    "gitignore": "^0.6.0",
+    "inquirer": "^8.2.0",
+    "listr": "^0.14.3",
+    "ncp": "^2.0.0",
+    "pkg-install": "^1.0.0",
+    "spdx-license-list": "^5.0.0"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "templates/"
+  ]
+}
