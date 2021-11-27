@@ -1,69 +1,80 @@
 import arg from 'arg';
 import inquirer from 'inquirer';
-import { createProject } from './main';
+import { commandExec } from './main';
 
 function parseArgumentsIntoOptions(rawArgs) {
-  const args = arg(
-    {
-      '--git': Boolean,
-      '--yes': Boolean,
-      '--install': Boolean,
-      '-g': '--git',
-      '-y': '--yes',
-      '-i': '--install',
-    },
-    {
-      argv: rawArgs.slice(2),
-    }
-  );
+  const validArgs = [
+    'h', 'help',
+    'c', 'component', 
+    's', 'screen', 
+  ];
+
+  const typedArgs = rawArgs.slice(2);
+  const command = getCommandName(typedArgs[0]);
+  const args = typedArgs.splice(1);
+  const isValidCommand = validArgs.indexOf(command) > -1;
+
   return {
-    skipPrompts: args['--yes'] || false,
-    git: args['--git'] || false,
-    template: args._[0],
-    runInstall: args['--install'] || false,
+    command,
+    isValidCommand,
+    args,
   };
  }
 
  async function promptForMissingOptions(options) {
-  const defaultTemplate = 'javascript';
-  if (options.skipPrompts) {
-    return {
-      ...options,
-      template: options.template || defaultTemplate,
-    };
+  const defaultCommand = 'help';
+
+  if (options.command == 'help') {
+    return options;
   }
- 
+
   const questions = [];
-  if (!options.template) {
+
+  if (options.isValidCommand === false) {
     questions.push({
       type: 'list',
-      name: 'template',
-      message: 'Please choose which project template to use',
-      choices: ['javascript', 'typescript'],
-      default: defaultTemplate,
-    });
+      name: 'command-name',
+      message: 'Select what you wanna create',
+      choices: ['component', 'screen'],
+      default:'component'
+    })
   }
- 
-  if (!options.git) {
+
+  if ( options.args.length == 0) {
     questions.push({
-      type: 'confirm',
-      name: 'git',
-      message: 'Should a git be initialized?',
-      default: false,
+      type: 'input',
+      name: 'component-name',
+      message: `What's the ${options.command} name? Use space if you wanna create more than one ${options.command}\n->`,
+      default: "MyComponent", 
     });
   }
- 
+
   const answers = await inquirer.prompt(questions);
+ 
   return {
     ...options,
-    template: options.template || answers.template,
-    git: options.git || answers.git,
+    command: options.isValidCommand ? options.command : answers['command-name'], 
+    isValidCommand: true,
+    args: options.args.length > 0 ? options.args : answers['component-name'].split(' ')
   };
- }
+}
 
- export async function cli(args) {
+function getCommandName(command) {
+  switch (command) {
+    case 'c': case 'component': 
+      return 'component';
+    case 's': case 'screen':
+      return 'screen';
+    case 'h': case 'help':
+      return 'help';
+
+    default: return '';
+  }
+}
+
+export async function cli(args) {
   let options = parseArgumentsIntoOptions(args);
-  // console.log(options)
   options = await promptForMissingOptions(options);
-  await createProject(options);
+  // console.log(options);
+  commandExec(options);
 }
