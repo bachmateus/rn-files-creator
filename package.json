@@ -1,11 +1,11 @@
 {
-  "name": "@bachmateus/cli2",
+  "name": "@bachmateus/rn-files-creator",
   "version": "1.0.0",
   "description": "nothing yet",
   "main": "src/index.js",
   "bin": {
-    "@bachmateus/cli2": "bin/create-project",
-    "create-project": "bin/create-project"
+    "@bachmateus/rn-files-creator": "bin/rn",
+    "rn": "bin/rn"
   },
   "publishConfig": {
     "access": "public"
@@ -15,7 +15,7 @@
   },
   "keywords": [
     "cli",
-    "create-project"
+    "rn"
   ],
   "author": "",
   "license": "ISC",
