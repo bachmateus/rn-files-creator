@@ -1,6 +1,5 @@
-import arg from 'arg';
 import inquirer from 'inquirer';
-import { commandExec } from './main';
+import Main from './main';
 
 function parseArgumentsIntoOptions(rawArgs) {
   const validArgs = [
@@ -22,13 +21,19 @@ function parseArgumentsIntoOptions(rawArgs) {
  }
 
  async function promptForMissingOptions(options) {
-  const defaultCommand = 'help';
-
   if (options.command == 'help') {
     return options;
   }
 
   const questions = [];
+
+  questions.push({
+    type: 'list',
+    name: 'language-choice',
+    message: 'Do you wanna create in which language?',
+    choices: ['JavaScript', 'TypeScript'],
+    default:'JavaScript'
+  })
 
   if (options.isValidCommand === false) {
     questions.push({
@@ -55,6 +60,7 @@ function parseArgumentsIntoOptions(rawArgs) {
     ...options,
     command: options.isValidCommand ? options.command : answers['command-name'], 
     isValidCommand: true,
+    language: answers['language-choice'],
     args: options.args.length > 0 ? options.args : answers['component-name'].split(' ')
   };
 }
@@ -75,5 +81,6 @@ function getCommandName(command) {
 export async function cli(args) {
   let options = parseArgumentsIntoOptions(args);
   options = await promptForMissingOptions(options);
-  commandExec(options);
+  const main = new Main(options);
+  main.commandExec();
 }

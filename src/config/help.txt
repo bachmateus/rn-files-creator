@@ -1,0 +1,21 @@
+This is a React Native CLI creator.
+
+This tool will help you to create React Native files faster.
+
+Commands list:
+
+    h, help -> See all commands,
+    c, component -> Create one or more components. (ex. component Component1 Component2)
+    c, screen -> Create one or more screens. (ex. screen Screen1 Screen2)
+
+This tool will create this structure:
+    + src
+      + components
+        + ComponentName
+          - index
+          - styles
+
+      + screens
+        + ScreenName
+          - index
+          - styles

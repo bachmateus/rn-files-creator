@@ -1,109 +1,129 @@
 import chalk from 'chalk';
-import execa from 'execa';
 import fs from 'fs';
 import Listr from 'listr';
 import ncp from 'ncp';
 import path from 'path';
-import { projectInstall } from 'pkg-install';
 import { promisify } from 'util';
 
 const access = promisify(fs.access);
 const copy = promisify(ncp);
 
-async function copyTemplateFiles(
-  templateUrl, 
-  targetUrl, 
-  commandDirectory, 
-  componentName, 
-  task
-) {
+export default class Main {
+  command = "";
+  args = [];
+  language = "JavaScript";
 
-  const targetDirectory = `${targetUrl}\\src\\${commandDirectory}s\\${componentName}\\`;
+  fullPathName = new URL(import.meta.url).pathname; 
+  templateDir = "";
+  targetDirectory = "";
 
-  if (!fs.existsSync(targetDirectory)){
-    await fs.mkdir(targetDirectory,{recursive:true},()=>{});
+  constructor(options){
+    this.command = options.command;
+    this.args = options.args;
+    this.language = options.language;
+
+    this.templateDir = path.resolve(
+      this.fullPathName.substr(this.fullPathName.indexOf('/') + 1),
+      '../../templates/' + this.language,
+      options.command
+    );
     
+    this.targetDirectory = options.targetDirectory || process.cwd();
+  }
+
+  showHelp() {
+    const helpDir = path.resolve(
+      this.fullPathName.substr(this.fullPathName.indexOf('/') + 1),
+      '../config/help.txt'
+    );
+
+    fs.readFile(helpDir, "utf8", async function(err, contents) {
+      console.log(contents) 
+    });
+  }
+
+  async createDirectory(targetDirectory, componentName, task) {
+    let result = false;
+
+    if (!fs.existsSync(targetDirectory)){
+      await fs.mkdir(targetDirectory, { recursive: true }, () => { });
+      result = true;
+    } else {
+      task.skip(`Directory is not empty: ${this.command}s\\${componentName}\\`)
+    }
+
+    return new Promise( resolve => {resolve(result)})
+  }  
+
+  async changeIndexComponentFiles(componentName, targetDirectory, language){
+    const file = language === 'JavaScript' ? 'index.js' : 'index.tsx';
+    const targetEditableFile = targetDirectory+file;
+    console.log(targetEditableFile)
+
+    setTimeout(async function() {
+      fs.readFile(targetEditableFile, "utf8", async function(err, contents) {
+        const newContentData = contents.replaceAll('MyComponent', componentName);
+        fs.writeFile(targetEditableFile, newContentData, e => {})  
+      });
+    }, 1000);
+
+  }
+
+  async copyTemplateFiles(templateDir, targetDirectory, item, callback){
+    const language = this.language;
+
     setTimeout(async function() {
       await copy(
-        templateUrl, 
+        templateDir, 
         targetDirectory,  
         {
           clobber: false,
         }
       );
-        
-      const targetEditableFile = targetDirectory+'index.js';
-
-      await fs.readFile(targetEditableFile, "utf8", async function(err, contents) {
-        
-        const newContentData = contents.replaceAll('MyComponent', componentName);
-        fs.writeFile(targetDirectory+'index.js',newContentData, e => {})  
-      });
-
+      callback(item, targetDirectory, language)
     }, 1000);
-  } else {
-    task.skip(`Directory is not empty: ${commandDirectory}s\\${componentName}\\`)
-  }
-  
-}
-
-function showHelp() {
-  console.log('This CLI helps you to create React Native components');
-}
-
-async function createFiles(options) {
-  options = {
-    ...options,
-    targetDirectory: options.targetDirectory || process.cwd() // + '/' + options.command + '/'+ options.args[0]
-  };
-
-  const fullPathName = new URL(import.meta.url).pathname;
-  const templateDir = path.resolve(
-    fullPathName.substr(fullPathName.indexOf('/') + 1),
-    '../../templates',
-    options.command
-  );
-  options.templateDirectory = templateDir;
-
-
-
-  try {
-    await access(templateDir, fs.constants.R_OK);
-  } catch (err) {
-    console.error('%s Invalid template name', chalk.red.bold('ERROR'));
-    process.exit(1);
   }
 
-  const templateUrl = options.templateDirectory;
-  const targetUrl = options.targetDirectory;
-  const commandDirectory = options.command;
-  const tasksData = [];
+  async createComponent() {
+    console.log(this.templateDir)
+    try {
+      await access(this.templateDir, fs.constants.R_OK);
+    } catch (err) {
+      console.error('%s Invalid template name', chalk.red.bold('ERROR'));
+      process.exit(1);
+    }
 
-  options.args.forEach( item => {
-    tasksData.push({
-      title: `Create ${item} ${options.command} files`,
-      task: async(ctx, task) => await copyTemplateFiles(templateUrl, targetUrl, commandDirectory, item, task),
+    const tasksData = [];
 
+    this.args.forEach( item => {
+      tasksData.push({
+        title: `Create ${item} ${this.command} files`,
+        task: async(ctx, task) => {
+          const targetDirectory = `${this.targetDirectory}\\src\\${this.command}s\\${item}\\`;
+          this.createDirectory(targetDirectory, item, task);
+          
+          this.copyTemplateFiles(
+            this.templateDir, targetDirectory, item, this.changeIndexComponentFiles
+          );
+          
+        },
+      })
     })
-  })
 
-  const tasks = new Listr(tasksData);
+    this.runCommand(tasksData)
 
-
-
-  await tasks.run();
-}
-
-export async function commandExec(options) {
- 
-  createFiles(options);
-  // return;
-  // return
-  switch (options.command) {
-    case 'help': showHelp(); break;
-    
-    default: break;
   }
-  
-  // console.log(options)
+
+  async runCommand(tasksData) {
+    const tasks = new Listr(tasksData);
+    await tasks.run();
+  }
+
+  async commandExec() {
+    switch (this.command) {
+      case 'help': this.showHelp(); break;
+      case 'component': case 'screen': this.createComponent(); break;
+      default: break;
+    }
+  }
 }
