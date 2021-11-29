@@ -54,12 +54,10 @@ export default class Main {
     const file = language === 'JavaScript' ? 'index.js' : 'index.tsx';
     const targetEditableFile = targetDirectory+file;
 
-    // setTimeout(async function() {
-      fs.readFile(targetEditableFile, "utf8", async function(err, contents) {
-        const newContentData = contents.replaceAll('MyComponent', componentName);
-        fs.writeFile(targetEditableFile, newContentData, e => {})  
-      });
-    // }, 1000);
+    fs.readFile(targetEditableFile, "utf8", async function(err, contents) {
+      const newContentData = contents.replaceAll('MyComponent', componentName);
+      fs.writeFile(targetEditableFile, newContentData, e => {})  
+    });
   }
 
   async copyTemplateFiles(templateDir, targetDirectory, item, language, callback){
