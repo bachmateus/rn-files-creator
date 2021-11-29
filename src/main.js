@@ -42,50 +42,36 @@ export default class Main {
     });
   }
 
-  async createDirectory(targetDirectory, componentName, task) {
-    let result = false;
-
+  async createDirectory(targetDirectory, componentName, task, command, callback) {
     if (!fs.existsSync(targetDirectory)){
-      await fs.mkdir(targetDirectory, { recursive: true }, () => { });
-      result = true;
+      fs.mkdir(targetDirectory, { recursive: true }, () => { callback(); });
     } else {
       task.skip(`Directory is not empty: ${this.command}s\\${componentName}\\`)
     }
-
-    return new Promise( resolve => {resolve(result)})
   }  
 
   async changeIndexComponentFiles(componentName, targetDirectory, language){
     const file = language === 'JavaScript' ? 'index.js' : 'index.tsx';
     const targetEditableFile = targetDirectory+file;
-    console.log(targetEditableFile)
 
-    setTimeout(async function() {
+    // setTimeout(async function() {
       fs.readFile(targetEditableFile, "utf8", async function(err, contents) {
         const newContentData = contents.replaceAll('MyComponent', componentName);
         fs.writeFile(targetEditableFile, newContentData, e => {})  
       });
-    }, 1000);
-
+    // }, 1000);
   }
 
-  async copyTemplateFiles(templateDir, targetDirectory, item, callback){
-    const language = this.language;
-
-    setTimeout(async function() {
-      await copy(
-        templateDir, 
-        targetDirectory,  
-        {
-          clobber: false,
-        }
-      );
-      callback(item, targetDirectory, language)
-    }, 1000);
+  async copyTemplateFiles(templateDir, targetDirectory, item, language, callback){
+    try {
+      await copy( templateDir, targetDirectory,  {clobber: false, } );
+      callback(item,targetDirectory,language)
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   async createComponent() {
-    console.log(this.templateDir)
     try {
       await access(this.templateDir, fs.constants.R_OK);
     } catch (err) {
@@ -98,20 +84,19 @@ export default class Main {
     this.args.forEach( item => {
       tasksData.push({
         title: `Create ${item} ${this.command} files`,
-        task: async(ctx, task) => {
+        task: async (ctx, task) => {
           const targetDirectory = `${this.targetDirectory}\\src\\${this.command}s\\${item}\\`;
-          this.createDirectory(targetDirectory, item, task);
-          
-          this.copyTemplateFiles(
-            this.templateDir, targetDirectory, item, this.changeIndexComponentFiles
-          );
-          
+
+          const callbackCreateDirectory = async () => {
+            this.copyTemplateFiles(this.templateDir, targetDirectory, item, this.language,this.changeIndexComponentFiles)
+          }
+
+          this.createDirectory(targetDirectory, item, task, this.command, callbackCreateDirectory);         
         },
       })
     })
 
     this.runCommand(tasksData)
-
   }
 
   async runCommand(tasksData) {
