@@ -1,4 +1,6 @@
-class Options {
+import path from 'path';
+
+export default class Options {
   command = "";
   args = [];
   language = "JavaScript";
@@ -14,7 +16,7 @@ class Options {
 
     this.templateDir = path.resolve(
       this.fullPathName.substr(this.fullPathName.indexOf('/') + 1),
-      '../../templates/' + this.language,
+      '../../../templates/' + this.language,
       options.command
     );
     

@@ -1,5 +1,17 @@
-class Component {
+import chalk from "chalk";
+import fs from 'fs';
+import { promisify } from 'util';
+import System from "./System";
+
+
+export default class Component {
+  options = {};
+  access = promisify(fs.access);
   
+  constructor(_options) {
+    this.options = _options;
+  }
+
   async changeIndexComponentFiles(componentName, targetDirectory, language){
     const file = language === 'JavaScript' ? 'index.js' : 'index.tsx';
     const targetEditableFile = targetDirectory+file;
@@ -12,7 +24,7 @@ class Component {
   
   async createComponent() {
     try {
-      await access(this.templateDir, fs.constants.R_OK);
+      await this.access(this.options.templateDir, fs.constants.R_OK);
     } catch (err) {
       console.error('%s Invalid template name', chalk.red.bold('ERROR'));
       process.exit(1);
@@ -20,22 +32,22 @@ class Component {
 
     const tasksData = [];
 
-    this.args.forEach( item => {
+    this.options.args.forEach( item => {
       tasksData.push({
-        title: `Create ${item} ${this.command} files`,
+        title: `Create ${item} ${this.options.command} files`,
         task: async (ctx, task) => {
-          const targetDirectory = `${this.targetDirectory}\\src\\${this.command}s\\${item}\\`;
+          const targetDirectory = `${this.options.targetDirectory}\\src\\${this.options.command}s\\${item}\\`;
 
           const callbackCreateDirectory = async () => {
-            this.copyTemplateFiles(this.templateDir, targetDirectory, item, this.language,this.changeIndexComponentFiles)
+            System.copyTemplateFiles(this.options.templateDir, targetDirectory, item, this.options.language,this.changeIndexComponentFiles)
           }
 
-          this.createDirectory(targetDirectory, item, task, this.command, callbackCreateDirectory);         
+          System.createDirectory(targetDirectory, item, task, this.options.command, callbackCreateDirectory);         
         },
       })
     })
 
-    this.runCommand(tasksData)
+    System.runCommand(tasksData)
   }
 
 }
