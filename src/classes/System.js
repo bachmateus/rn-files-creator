@@ -1,7 +1,10 @@
 import Listr from 'listr';
-import fs from 'fs';
+import fs, { access, constants } from 'fs';
 import ncp from 'ncp';
 import { promisify } from 'util';
+
+const jsonConfigFileUrl = process.cwd()+'\\rn-creator1.json';
+const packageJsonUrl = process.cwd()+'\\package.json';
 
 export default class System {
 
@@ -12,7 +15,7 @@ export default class System {
     } else {
       task.skip(`Directory is not empty: ${command}s\\${componentName}\\`)
     }
-  }  
+  }
 
   static async copyTemplateFiles(templateDir, targetDirectory, item, language, callback){
     const copy = promisify(ncp);
@@ -30,4 +33,22 @@ export default class System {
     await tasks.run();
   }
 
+  static getJsonConfigFileToObject() { 
+    return System.convertJsonFileToObject(jsonConfigFileUrl);
+  }
+  
+  static convertJsonFileToObject(fileUrl) {
+    try {
+      const fileContent = fs.readFileSync(fileUrl, "utf8");
+      const json = JSON.parse(fileContent);
+      
+      return json;
+    } catch {
+      return {};
+    }
+  }
+
+  static writeJsonConfigFile(fileContent){
+    fs.writeFile( jsonConfigFileUrl, JSON.stringify(fileContent), e => {})  
+  }
 }

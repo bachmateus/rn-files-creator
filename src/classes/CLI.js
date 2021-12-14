@@ -1,4 +1,5 @@
 import inquirer from 'inquirer';
+import System from './System';
 
 export default class CLI {
   static parseArgumentsIntoOptions(rawArgs) {
@@ -20,20 +21,38 @@ export default class CLI {
     };
    }
   
-  static async promptForMissingOptions(options) {
+  static async promptForMissingOptions(options, jsonConfig) {
     if (options.command == 'help') {
       return options;
     }
   
     const questions = [];
+    const isLanguageNotSet = ( 
+      jsonConfig.language === undefined || 
+      jsonConfig.language !== 'JavaScript' &&
+      jsonConfig.language !== 'TypeScript'
+    );
+    let willWriteOnJsonFile = false;
   
-    questions.push({
-      type: 'list',
-      name: 'language-choice',
-      message: 'Do you wanna create in which language?',
-      choices: ['JavaScript', 'TypeScript'],
-      default:'JavaScript'
-    })
+    if ( isLanguageNotSet ) {
+      questions.push({
+        type: 'list',
+        name: 'language-choice',
+        message: 'Do you wanna create in which language?',
+        choices: ['JavaScript', 'TypeScript'],
+        default:'JavaScript'
+      })
+    } 
+
+    if ( jsonConfig.useStyledComponent === undefined ) {
+      questions.push({
+        type: 'list',
+        name: 'style-choice',
+        message: 'Do you wanna use styled component?',
+        choices: ['No', 'Yes'],
+        default:'No'
+      })
+    }
   
     if (options.isValidCommand === false) {
       questions.push({
@@ -55,12 +74,25 @@ export default class CLI {
     }
   
     const answers = await inquirer.prompt(questions);
+
+    if ( isLanguageNotSet ) {
+      jsonConfig.language = answers['language-choice'];
+      willWriteOnJsonFile = true;
+    }
+
+    if ( jsonConfig.useStyledComponent === undefined ) {
+      jsonConfig.useStyledComponent = answers['style-choice']
+      willWriteOnJsonFile = true;
+    }
+
+    if ( willWriteOnJsonFile )
+      System.writeJsonConfigFile(jsonConfig)
    
     return {
       ...options,
       command: options.isValidCommand ? options.command : answers['command-name'], 
       isValidCommand: true,
-      language: answers['language-choice'],
+      language: jsonConfig.language ? jsonConfig.language : answers['language-choice'],
       args: options.args.length > 0 ? options.args : answers['component-name'].split(' ')
     };
   }
