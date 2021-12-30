@@ -3,6 +3,7 @@ import Help from "./classes/Help";
 import Options from "./classes/Options";
 import Component from './classes/Component';
 import System from "./classes/System";
+import Screen from "./classes/Screens";
 
 export default class Main 
 {
@@ -15,20 +16,20 @@ export default class Main
     
     const options = new Options(argOptions)
 
-    // console.log(options);
-
-    return;
-
     switch (options.command) {
-      case 'help': 
-        Help.showTxtHelpFile(options.fullPathName); 
+      case 'component': 
+        const component = new Component(options);
+        component.createComponent(); 
         break;
       
-        case 'component': case 'screen': 
-          const component = new Component(options);
-          component.createComponent(); 
-          break;
-      default: break;
+      case 'screen': 
+        const screen = new Screen(options);
+        screen.createComponent(); 
+        break;
+      
+      case 'help': default: 
+        Help.showTxtHelpFile(options.fullPathName); 
+        break;
     }
   }
 }

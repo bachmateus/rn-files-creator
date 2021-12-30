@@ -3,16 +3,11 @@ import System from './System';
 
 export default class CLI {
   static parseArgumentsIntoOptions(rawArgs) {
-    const validArgs = [
-      'h', 'help',
-      'c', 'component', 
-      's', 'screen', 
-    ];
-  
+    const validArgs = CLI.getValidArgs();
     const typedArgs = rawArgs.slice(2);
     const command = CLI.getCommandName(typedArgs[0]);
     const args = typedArgs.splice(1);
-    const isValidCommand = validArgs.indexOf(command) > -1;
+    const isValidCommand =  validArgs.indexOf(command) > -1;
   
     return {
       command,
@@ -81,7 +76,7 @@ export default class CLI {
     }
 
     if ( jsonConfig.useStyledComponent === undefined ) {
-      jsonConfig.useStyledComponent = answers['style-choice']
+      jsonConfig.useStyledComponent = answers['style-choice'] === 'Yes' 
       willWriteOnJsonFile = true;
     }
 
@@ -93,19 +88,28 @@ export default class CLI {
       command: options.isValidCommand ? options.command : answers['command-name'], 
       isValidCommand: true,
       language: jsonConfig.language ? jsonConfig.language : answers['language-choice'],
-      args: options.args.length > 0 ? options.args : answers['component-name'].split(' ')
+      args: options.args.length > 0 ? options.args : answers['component-name'].split(' '),
+      useStyledComponent: jsonConfig.useStyledComponent
     };
   }
   
+  static getValidArgs() {
+    return [
+    '-h', 'help',
+    '-c', 'component',
+    '-s', 'screen', 
+    ];
+  }
+
   static getCommandName(command) {
     switch (command) {
-      case 'c': case 'component': 
+      case '-c': case 'component': 
         return 'component';
-      case 's': case 'screen':
+      case '-s': case 'screen':
         return 'screen';
-      case 'n': case 'navigator':
+      case '-n': case 'navigator':
         return 'navigator';
-      case 'h': case 'help':
+      case '-h': case 'help':
         return 'help';
   
       default: return '';

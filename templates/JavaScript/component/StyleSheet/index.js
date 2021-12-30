@@ -3,12 +3,10 @@ import { View, Text } from "react-native";
 
 import styles from './styles';
 
-const MyComponent = () => {
+export default function MyComponent () {
   return (
     <View style={styles.container}>
-      <Text>MyComponent</Text>
+      <Text style={styles.title}>MyComponent</Text>
     </View>
   )
 }
-
-export default MyComponent;

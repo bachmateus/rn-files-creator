@@ -8,6 +8,7 @@ export default class Options {
   fullPathName = new URL(import.meta.url).pathname; 
   templateDir = "";
   targetDirectory = "";
+  useStyledComponent = false;
 
   constructor(options){
     this.command = options.command;
@@ -21,5 +22,7 @@ export default class Options {
     );
     
     this.targetDirectory = options.targetDirectory || process.cwd();
+
+    this.useStyledComponent = options.useStyledComponent;
   }
 }

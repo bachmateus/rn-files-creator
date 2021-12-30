@@ -9,7 +9,6 @@ const packageJsonUrl = process.cwd()+'\\package.json';
 export default class System {
 
   static async createDirectory(targetDirectory, componentName, task, command, callback) {
-    console.log(targetDirectory)
     if (!fs.existsSync(targetDirectory)){
       fs.mkdir(targetDirectory, { recursive: true }, () => { callback(); });
     } else {
@@ -24,7 +23,7 @@ export default class System {
       await copy( templateDir, targetDirectory,  {clobber: false, } );
       callback(item,targetDirectory,language)
     } catch (e) {
-      console.log(e)
+      console.error(e)
     }
   }
 

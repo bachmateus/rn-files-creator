@@ -10,6 +10,9 @@ export default class Component {
   
   constructor(_options) {
     this.options = _options;
+    this.options.templateDir = this.options.useStyledComponent === true
+      ? `${this.options.templateDir}\\StyledComponent`
+      : `${this.options.templateDir}\\StyleSheet`
   }
 
   async changeIndexComponentFiles(componentName, targetDirectory, language){
@@ -36,10 +39,16 @@ export default class Component {
       tasksData.push({
         title: `Create ${item} ${this.options.command} files`,
         task: async (ctx, task) => {
+          
           const targetDirectory = `${this.options.targetDirectory}\\src\\${this.options.command}s\\${item}\\`;
 
           const callbackCreateDirectory = async () => {
-            System.copyTemplateFiles(this.options.templateDir, targetDirectory, item, this.options.language,this.changeIndexComponentFiles)
+            System.copyTemplateFiles(
+              this.options.templateDir, 
+              targetDirectory, item, 
+              this.options.language,
+              this.changeIndexComponentFiles
+            )
           }
 
           System.createDirectory(targetDirectory, item, task, this.options.command, callbackCreateDirectory);         
