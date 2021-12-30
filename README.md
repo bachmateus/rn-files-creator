@@ -1,5 +1,9 @@
 # rn-files-creator
 
+CAUTION!!!
+This project is on development DO NOT use it on a production project.
+
+
 Instructions:
 
 Open the project and run
