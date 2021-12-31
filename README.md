@@ -3,6 +3,8 @@
 
 `rn-files-creator` make easier to create new React Native components files. It provides a basic file structure for your components with StyleSheet or StyledComponent.
 
+![](logo.png)
+
 # CAUTION
 This project is stil on development due to DO NOT use it on a production project.
 
