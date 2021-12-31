@@ -27,17 +27,19 @@ Create React Native files.
 # Project folders structure
 `rn-files-creator` use the following project structure to create the components.
 
-root
-+-- src
-    +-- components
-        +-- ComponentName
-            +-- index.js
-            +-- styles.js
-    +-- screens
-        +-- ScreenName
-            +-- index.js
-            +-- styles.js
-+-- rn-creator1.json
+  ```bash
+  root
+  +-- src
+      +-- components
+          +-- ComponentName
+              +-- index.js
+              +-- styles.js
+      +-- screens
+          +-- ScreenName
+              +-- index.js
+              +-- styles.js
+  +-- rn-creator1.json
+  ```
 
 
 # Usage
