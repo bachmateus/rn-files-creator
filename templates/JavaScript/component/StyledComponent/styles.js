@@ -8,5 +8,5 @@ export const Container = styled.View`
 `
 
 export const Title = styled.Text`
-  font-size: 32;
+  font-size: 32px;
 `

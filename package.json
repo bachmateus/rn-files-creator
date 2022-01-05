@@ -1,7 +1,7 @@
 {
   "name": "@bachmateus/rn-files-creator",
-  "version": "1.0.1",
-  "description": "nothing yet",
+  "version": "1.0.2",
+  "description": "rn-files-creator make easier to create new React Native components files. It provides a basic file structure for your components with StyleSheet or StyledComponent.",
   "main": "src/index.js",
   "bin": {
     "@bachmateus/rn-files-creator": "bin/rn",
