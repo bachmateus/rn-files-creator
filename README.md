@@ -1,12 +1,12 @@
 # rn-files-creator
 [![Version](https://img.shields.io/npm/v/@bachmateus/rn-files-creator.svg)](https://www.npmjs.com/package/@bachmateus/rn-files-creator)
 
-`rn-files-creator` make easier to create new React Native components files. It provides a basic file structure for your components with StyleSheet or StyledComponent.
+`rn-files-creator` make it easier to create new React Native components files. It provides a basic file structure for your components with StyleSheet or StyledComponent.
 
 ![](logo.png)
 
 # CAUTION
-This project is stil on development due to DO NOT use it on a production project.
+DO NOT use this project in a production project due to it still being under development
 
 # How to install
 You can install via npm:
@@ -18,14 +18,14 @@ You can install via npm:
 # Features
 Create React Native files.
 
-1. Create components files using JavaScript.
-2. Create components files using TypeScript.
+1. Create component files using JavaScript.
+2. Create component files using TypeScript.
 3. Create style file using StyleSheet.
 4. Create style file using StyledComponent.
 5. Create a config file to store your preferences.
 
 # Project folders structure
-`rn-files-creator` use the following project structure to create the components.
+`rn-files-creator` use the following project structure to create the component.
 
   ```bash
   root
@@ -66,7 +66,7 @@ Type the following command to create a screen
   ```bash
   rn -s ScreenName
   ```
-If you want to create more than one screen, you can separe the screens name using space
+If you want to create more than one screen, you can separe the screen name using space
 
   ```bash
   rn -s ScreenName1 ScreenName2 ScreenName3 ScreenName4
@@ -79,7 +79,7 @@ You can follow the guide to create a component if you do not want to type the en
   rn
   ```
 
-After typping enter just follow the guide.
+After typing enter just follow the guide.
 
 
 # Command list
@@ -92,11 +92,11 @@ After typping enter just follow the guide.
 
 
 ### Known issues
-1. It do not work on MacOS.
+1. It does not work on MacOS.
 2. It has not been tested on Linux
 
 # Inspiration
-I want to thanks DOMINIK KUNDEL. I watched his video to learn how to create a CLI.
+I want to thank DOMINIK KUNDEL. I watched his video to learn how to create a CLI.
 
 https://www.youtube.com/watch?v=s2h28p4s-Xs
 https://www.twilio.com/blog/how-to-build-a-cli-with-node-js?utm_source=youtube&utm_medium=video&utm_campaign=node-cli-howto
