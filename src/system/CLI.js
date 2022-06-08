@@ -1,5 +1,6 @@
 import inquirer from 'inquirer';
-import System from './System';
+
+import JsonConfigFile from '../files-manager/JsonConfigFile.manager';
 
 export default class CLI {
   static parseArgumentsIntoOptions(rawArgs) {
@@ -81,7 +82,7 @@ export default class CLI {
     }
 
     if ( willWriteOnJsonFile )
-      System.writeJsonConfigFile(jsonConfig)
+      JsonConfigFile.writeJsonConfigFile(jsonConfig)
    
     return {
       ...options,

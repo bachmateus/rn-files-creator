@@ -1,3 +1,5 @@
+- Force component's name with Pascal case
+
 - read/create package.json file
 - Install libs
 

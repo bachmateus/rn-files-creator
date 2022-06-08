@@ -1,15 +1,19 @@
-import CLI from "./classes/CLI";
-import Help from "./classes/Help";
-import Options from "./classes/Options";
-import Component from './classes/Component';
-import System from "./classes/System";
-import Screen from "./classes/Screens";
+import CLI from "./system/CLI";
+
+import Help from "./views/Help.view";
+
+import Options from "./models/Options.model";
+
+import Component from './builders/Component.builder';
+import Screen from "./builders/Screen.builder";
+
+import JsonConfigFile from "./files-manager/JsonConfigFile.manager";
 
 export default class Main 
 {
   static async main(args){
 
-    const jsonConfig = System.getJsonConfigFileToObject();
+    const jsonConfig = JsonConfigFile.getJsonConfigFileToObject();
    
     let argOptions = CLI.parseArgumentsIntoOptions(args);
     argOptions = await CLI.promptForMissingOptions(argOptions, jsonConfig);

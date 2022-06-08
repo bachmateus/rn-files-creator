@@ -1,8 +1,8 @@
 import chalk from "chalk";
 import fs from 'fs';
 import { promisify } from 'util';
-import System from "./System";
 
+import ProjectFiles from "../files-manager/ProjectFiles.manager";
 
 export default class Component {
   options = {};
@@ -15,7 +15,7 @@ export default class Component {
       : `${this.options.templateDir}\\StyleSheet`
   }
 
-  async changeIndexComponentFiles(componentName, targetDirectory, language){
+  async replaceComponentName(componentName, targetDirectory, language){
     const file = language === 'JavaScript' ? 'index.js' : 'index.tsx';
     const targetEditableFile = targetDirectory+file;
 
@@ -43,20 +43,20 @@ export default class Component {
           const targetDirectory = `${this.options.targetDirectory}\\src\\${this.options.command}s\\${item}\\`;
 
           const callbackCreateDirectory = async () => {
-            System.copyTemplateFiles(
+            ProjectFiles.copyTemplateFiles(
               this.options.templateDir, 
               targetDirectory, item, 
               this.options.language,
-              this.changeIndexComponentFiles
+              this.replaceComponentName
             )
           }
 
-          System.createDirectory(targetDirectory, item, task, this.options.command, callbackCreateDirectory);         
+          ProjectFiles.createDirectory(targetDirectory, item, task, this.options.command, callbackCreateDirectory);         
         },
       })
     })
 
-    System.runCommand(tasksData)
+    ProjectFiles.runCommand(tasksData)
   }
 
 }

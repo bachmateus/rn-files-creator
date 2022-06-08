@@ -1,12 +1,9 @@
 import Listr from 'listr';
-import fs, { access, constants } from 'fs';
+import fs from 'fs';
 import ncp from 'ncp';
 import { promisify } from 'util';
 
-const jsonConfigFileUrl = process.cwd()+'\\rn-creator1.json';
-const packageJsonUrl = process.cwd()+'\\package.json';
-
-export default class System {
+export default class ProjectFiles {
 
   static async createDirectory(targetDirectory, componentName, task, command, callback) {
     if (!fs.existsSync(targetDirectory)){
@@ -32,22 +29,5 @@ export default class System {
     await tasks.run();
   }
 
-  static getJsonConfigFileToObject() { 
-    return System.convertJsonFileToObject(jsonConfigFileUrl);
-  }
-  
-  static convertJsonFileToObject(fileUrl) {
-    try {
-      const fileContent = fs.readFileSync(fileUrl, "utf8");
-      const json = JSON.parse(fileContent);
-      
-      return json;
-    } catch {
-      return {};
-    }
-  }
 
-  static writeJsonConfigFile(fileContent){
-    fs.writeFile( jsonConfigFileUrl, JSON.stringify(fileContent), e => {})  
-  }
 }
