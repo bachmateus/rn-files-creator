@@ -4,6 +4,7 @@
     "spec/**/*.spec.ts",
     "src/**/*.spec.ts",
     "test/",
+    "dev/"
   ],
   "include": [
     "src/"
