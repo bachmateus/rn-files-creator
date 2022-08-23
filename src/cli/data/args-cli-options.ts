@@ -3,10 +3,10 @@
  */
 export interface IArgsCliOptions {
   isHelp: boolean
-  components: string[] | undefined
-  screens: string[] | undefined
-  navigators: string[] | undefined
-  navigatorsTypes: navigatorsTypesEnum | undefined
+  component: string[] | undefined
+  screen: string[] | undefined
+  navigator: string[] | undefined
+  navigatorsType: navigatorsTypesEnum | undefined
   includeOn: string[] | undefined
 }
 
