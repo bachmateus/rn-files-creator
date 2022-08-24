@@ -1,5 +1,4 @@
-import chalk from "chalk";
-import { exceptionType, PromptExeptionProps } from "../data/prompt-exception-props";
+import { ExcectionColorLog, exceptionType, PromptExeptionProps } from "../data/prompt-exception-props";
 
 export class PromptExeption implements PromptExeptionProps{
   message: string;
@@ -14,8 +13,7 @@ export class PromptExeption implements PromptExeptionProps{
   }
 
   handle() {
-    const chalkPromtColor = this.exceptionType === exceptionType.ERROR ? chalk.red.bold(exceptionType.ERROR) : chalk.yellow.bold(exceptionType.WARN)
-    console.error(chalkPromtColor, this.message);
+    console.error(ExcectionColorLog[this.exceptionType], this.message);
     if (this.interruptProcess) process.exit();
   }
   
