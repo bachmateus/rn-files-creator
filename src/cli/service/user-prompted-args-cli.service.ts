@@ -2,7 +2,7 @@ import arg from 'arg';
 import { argOptions } from '../../config/argOptions';
 import { IArgsCliOptions } from '../data/args-cli-options';
 import { CreatorType } from '../data/creator-list';
-import { InvalidArgumentException } from '../exception/invalid-argument.exception';
+import { InvalidArgumentException } from '../logger/invalid-argument.logger';
 import { UserPromptedArgsCliView } from '../view/user-prompted-args-cli.view';
 
 export class UserPromptedArgsCliService {

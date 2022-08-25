@@ -1,6 +1,6 @@
 import { promises as fs } from 'fs';
-import { FileNotFoundException } from '../exception/file-not-found.exception';
-import { FileNotWrittenException } from '../exception/file-not-written.exception';
+import { FileNotFoundException } from '../logger/file-not-found.logger';
+import { FileNotWrittenException } from '../logger/file-not-written.logger';
 const { mkdir, stat, copyFile, readFile, writeFile } = fs;
 
 export class FilesManagerService {
@@ -16,7 +16,6 @@ export class FilesManagerService {
   async createDirectory(targetDirectory: string): Promise<boolean> {
     try {
       const createdDirectory = await mkdir(targetDirectory, { recursive: true });
-      console.log(createdDirectory)
       if (createdDirectory===undefined) throw new Error("Directory not created") 
       return true
     } catch(error) {
