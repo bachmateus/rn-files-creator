@@ -1,10 +1,12 @@
 {
   "extends": "./tsconfig.json",
+
   "exclude": [
     "spec/**/*.spec.ts",
     "src/**/*.spec.ts",
     "test/",
-    "dev/"
+    "dev/",
+    "src/builder/templates/TypeScript/"
   ],
   "include": [
     "src/"

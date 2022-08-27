@@ -1,3 +1,4 @@
+import { userProjectPath } from "../../manager/constants/paths";
 import { FilesManagerService } from "../../manager/service/files-manager.service";
 import { RnFilesCreatorConfigFile } from "../data/rn-files-creator-config-file";
 import { RnFilesCreatorConfigFileView } from "../view/rn-files-creator-config-file-cli.view";
@@ -19,15 +20,12 @@ export class RnFilesCreatorConfigFileService {
   }
 
   private async getUserRnConfigFile(): Promise<RnFilesCreatorConfigFile> {
-    const rnConfigFileContent = await this.filesManagerService.readFile('test/rn-files-config-service.json');
+    const rnConfigFileContent = await this.filesManagerService.readFile(userProjectPath + '\\rn-files-config-service.json');
     const rnConfigFile = rnConfigFileContent ? JSON.parse(rnConfigFileContent) : {};
     return rnConfigFile;
   }
 
   private async updateUserRnConfigFile(rnConfigFile: RnFilesCreatorConfigFile){
-    await this.filesManagerService.writeFile('test/rn-files-config-service.json', JSON.stringify(rnConfigFile));
-    const rnConfigFileContent = await this.filesManagerService.readFile('test/rn-files-config-service.json');
-    if (!rnConfigFileContent) console.log('Não foi')
-    // TODO: show green message  
+    await this.filesManagerService.writeFile(userProjectPath, '\\rn-files-config-service.json', JSON.stringify(rnConfigFile));
   }
 }

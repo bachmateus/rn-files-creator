@@ -1,10 +1,12 @@
 import { promises as fs } from 'fs';
+import { ErrorFileCreated } from '../logger/error-file-created.logger';
 import { FileNotFoundException } from '../logger/file-not-found.logger';
 import { FileNotWrittenException } from '../logger/file-not-written.logger';
+import { SuccessFileCreated } from '../logger/success-file-created.logger';
 const { mkdir, stat, copyFile, readFile, writeFile } = fs;
 
 export class FilesManagerService {
-  async checkIfPathExists(filePath: string) {
+  async checkIfPathExists(filePath: string): Promise<boolean> {
     try {
       await stat(filePath)
       return true
@@ -24,12 +26,14 @@ export class FilesManagerService {
     }
   }
 
-  async copyFile(filePath:string, targetFilePath:string): Promise<boolean> {
+  async copyFile(filePath:string, targetDirectoryPath:string, targetFilePath:string): Promise<boolean> {
     try {
-      await copyFile(filePath, targetFilePath)
+      await copyFile(filePath, targetDirectoryPath + targetFilePath)
+      new SuccessFileCreated(targetFilePath)
       return true
     } catch(error) {
-      console.error(error)
+      new ErrorFileCreated(targetFilePath)
+      // TODO: create a file log txt
       return false
     } 
   }
@@ -43,9 +47,11 @@ export class FilesManagerService {
     }
   }
 
-  async writeFile(filePath:string,newContent:string) {
+  async writeFile(directoryPath: string, filePath:string, newContent:string) {
     try {
-      return await writeFile(filePath,newContent)
+      const resp = await writeFile(directoryPath + filePath, newContent);
+      new SuccessFileCreated(filePath)
+      return resp
     } catch (error) {
       new FileNotWrittenException(filePath)
       return null
