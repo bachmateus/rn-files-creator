@@ -4,16 +4,14 @@ import { RnFilesCreatorConfigFile } from "../data/rn-files-creator-config-file";
 import { RnFilesCreatorConfigFileView } from "../view/rn-files-creator-config-file-cli.view";
 
 export class RnFilesCreatorConfigFileService {
-  filesManagerService: FilesManagerService
-
-  constructor() {
-    this.filesManagerService = new FilesManagerService()
-  }
+  constructor(
+    private filesManagerService: FilesManagerService,
+    private rnFilesCreatorConfigFileView: RnFilesCreatorConfigFileView
+  ) {}
 
   async handleGetUserRnConfigFile() {
     const savedRnConfigFile = await this.getUserRnConfigFile();
-    const rnFilesCreatorConfigFileView = new RnFilesCreatorConfigFileView();
-    const validatedRnConfigFile = await rnFilesCreatorConfigFileView.askforMissingParams(savedRnConfigFile) as RnFilesCreatorConfigFile;
+    const validatedRnConfigFile = await this.rnFilesCreatorConfigFileView.askforMissingParams(savedRnConfigFile) as RnFilesCreatorConfigFile;
     const configHasChanged = JSON.stringify(validatedRnConfigFile) !== JSON.stringify(savedRnConfigFile)
     if (configHasChanged) await this.updateUserRnConfigFile(validatedRnConfigFile)
     return validatedRnConfigFile

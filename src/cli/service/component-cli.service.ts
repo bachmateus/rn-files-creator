@@ -1,21 +1,21 @@
+import { ComponentBuilderService } from "../../builder/service/component-builder.service";
 import { validateComponentName } from "../../common/functions/validation";
 import { ComponentCliParams } from "../data/component-creator-params";
+import { RnFilesCreatorConfigFile } from "../data/rn-files-creator-config-file";
 import { InvalidComponentNameLogger } from "../logger/invalid-component-name.logger";
 import { ComponentCliView } from "../view/component-cli.view";
 
 export class ComponentCliService  {
-  private componentCliView: ComponentCliView
-  constructor() {
-    this.componentCliView = new ComponentCliView();
-  }
+  constructor(
+    private componentCliView: ComponentCliView,
+    private componentBuilderService: ComponentBuilderService
+  ) {}
 
-  async handler(componentCliParams: ComponentCliParams): Promise<boolean> {
+  async handler(componentCliParams: ComponentCliParams, projectConfig: RnFilesCreatorConfigFile): Promise<boolean> {
     const promptedParams = await this.componentCliView.askforMissingParams(componentCliParams);
     this.validateParams(promptedParams);
     const formatedComponentsNames = this.formatComponentsNames(promptedParams);
-
-    // TODO: invoke creator
-    console.log(formatedComponentsNames)
+    await this.componentBuilderService.handle(formatedComponentsNames.components, projectConfig)
     return true;
   }
 
