@@ -9,11 +9,15 @@ export interface PromptLoggerProps {
 export enum loggerType {
   WARN = 'WARN',
   ERROR = 'ERROR',
-  SUCCESS = 'SUCCESS'
+  SUCCESS = 'SUCCESS',
+  CREATE = 'CREATE',
+  UPDATE = 'UPDATE'
 }
 
 export class LoggerColor {
-  static WARN = chalk.red.bold('WARN');
+  static WARN = chalk.yellow.bold('WARN');
   static ERROR = chalk.red.bold('ERROR');
-  static SUCCESS = chalk.red.bold('SUCCESS');
+  static SUCCESS = chalk.green.bold('SUCCESS');
+  static CREATE = chalk.green.bold('CREATE');
+  static UPDATE = chalk.blue.bold('UPDATE');
 }
