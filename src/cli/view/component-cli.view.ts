@@ -7,7 +7,10 @@ export class ComponentCliView {
     const questions = [];
     (componentCliParams.components.length===0) && questions.push(this.componentNameQuestion())
     if(questions.length === 0) return componentCliParams;
-    return await inquirer.prompt(questions)
+    const userResponse = await inquirer.prompt(questions) 
+    return {
+      components: [userResponse.components]
+    }
   }
 
   private componentNameQuestion(): Answers{
@@ -15,7 +18,6 @@ export class ComponentCliView {
       type: 'input',
       name: 'components',
       message: `What's the component name?\n->`,
-      default: "MyComponent", 
       validate: validateComponentName
     }
   }

@@ -1,14 +1,9 @@
-import path from "path";
 import { RnFilesCreatorConfigFile } from "../../cli/data/rn-files-creator-config-file";
-import { cliTemplatePath, userProjectDirectory, userProjectPath } from "../../manager/constants/paths";
-import { ErrorFileCreated } from "../../manager/logger/error-file-created.logger";
-import { SuccessFileCreated } from "../../manager/logger/success-file-created.logger";
+import { cliTemplatePath, userProjectDirectory } from "../../manager/constants/paths";
 import { FilesManagerService } from "../../manager/service/files-manager.service";
 import { ComponentAlreadyExistsLogger } from "../logger/component-already-exists.logger";
-import { TemplateNotFoundError } from "../logger/template-not-found";
 
 export class ComponentBuilderService {
-  private userComponentPath = userProjectPath
   private projectConfig: RnFilesCreatorConfigFile = {}
 
   constructor(private filesManagerService: FilesManagerService) {}
@@ -16,8 +11,6 @@ export class ComponentBuilderService {
   async handle(components: string[], projectConfig: RnFilesCreatorConfigFile) {
     this.projectConfig = projectConfig;
 
-    // console.log('userProjectPath', userProjectDirectory.component)
-    // console.log('cliTemplatePath', cliTemplatePath.component)
     for (const component of components) {
       await this.createComponent(component)
     }
@@ -36,13 +29,13 @@ export class ComponentBuilderService {
     return doesExist;
   }
 
-  async handleCopyTemplateFiles(componentName: string): Promise<void> {
-    await this.copyTemplateFile(componentName, 'index.js');
-    await this.copyTemplateFile(componentName, 'styles.js');
+  async handleCopyTemplateFiles(componentName: string): Promise<boolean> {
+    const indexWasCopied = await this.copyTemplateFile(componentName, 'index.js');
+    const stylesWasCopied = await this.copyTemplateFile(componentName, 'styles.js');
+    return indexWasCopied && stylesWasCopied
   }
 
-  async copyTemplateFile(componentName: string, fileName: string): Promise<void> {
-    const targetDirectory = `${userProjectDirectory.component}\\${componentName}\\`;
-    await this.filesManagerService.copyFile(`${cliTemplatePath.component}\\${fileName}`, targetDirectory, `\\${fileName}`);
+  async copyTemplateFile(componentName: string, fileName: string): Promise<boolean> {
+    return await this.filesManagerService.copyFile(`${cliTemplatePath.component}\\${fileName}`, userProjectDirectory.component, `\\${componentName}\\${fileName}`);
   }
 }
