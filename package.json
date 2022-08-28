@@ -12,9 +12,10 @@
   },
   "scripts": {
     "start": "ts-node dev/index.ts",
-    "start:dev": "npx nodemon dev/index.ts",
-    "build": "npx tsc -p tsconfig-build.json && npm link",
-    "test": "jest"
+    "start:dev": "SET NODE_ENVIRONMENT=development & npx nodemon dev/index.ts",
+    "build": "npx tsc -p tsconfig-build.json",
+    "build:dev": "npm run build && npm link",
+    "test": "SET NODE_ENVIRONMENT=development & jest"
   },
   "keywords": [
     "cli",

@@ -1,6 +1,6 @@
 import path from "path";
 
-export const userProjectPath = process.cwd();
+export const userProjectPath = process.env.NODE_ENVIRONMENT ? `${process.cwd()}\\test\\target-dir` : process.cwd();
 
 export const cliPath = path.resolve(
   __dirname.substring(__dirname.indexOf('/') + 1),
