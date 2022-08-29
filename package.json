@@ -15,7 +15,8 @@
     "start:dev": "SET NODE_ENVIRONMENT=development & npx nodemon dev/index.ts",
     "build": "npx tsc -p tsconfig-build.json",
     "build:dev": "npm run build && npm link",
-    "test": "SET NODE_ENVIRONMENT=development & jest"
+    "test": "SET NODE_ENVIRONMENT=development & jest",
+    "test:coverage": "SET NODE_ENVIRONMENT=development & jest --coverage"
   },
   "keywords": [
     "cli",
