@@ -1,5 +1,5 @@
 import arg from 'arg';
-import { argOptions } from '../../config/argOptions';
+import { argOptions } from '../config/argOptions';
 import { IArgsCliOptions } from '../data/args-cli-options';
 import { CreatorType } from '../data/creator-list';
 import { InvalidArgumentException } from '../logger/invalid-argument.logger';

@@ -7,7 +7,7 @@ export const argOptions: arg.Spec = {
   "-h": Boolean,
   "-c": [String],
   "-s": [String],
-  "-n": [String],
+  "-n": String,
   "-t": String,
   "-i": [String],
   '-help': '-h',
