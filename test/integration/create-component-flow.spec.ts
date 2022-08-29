@@ -3,6 +3,7 @@ import { PromptLogger } from '../../src/common/logger/prompt-logger';
 import { createCommandsArgs } from "../util/create-commands-args";
 import { FilesManagerService } from "../../src/manager/service/files-manager.service";
 import { rnFilesCreatorConfigFileService } from "../../src/cli/cli.module";
+import inquirer from 'inquirer';
 
 jest.mock('../../src/common/logger/prompt-logger');
 const testTargetDirectory = process.cwd()+'\\test\\target-dir';
@@ -33,6 +34,15 @@ describe('Create Component Flow', () => {
     expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\\Component1\\styles.js"});
     expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\\Component2\\index.js"});
     expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\\Component2\\styles.js"});
+  })
+  it('should SUCCESS to create a component if arg -c was not passed', async() => {
+    jest.spyOn(inquirer, 'prompt').mockResolvedValueOnce(Promise.resolve({ creator: 'component' }))
+    jest.spyOn(inquirer, 'prompt').mockResolvedValueOnce(Promise.resolve({components: 'ComponentWithNoParam'}))
+    const args = createCommandsArgs('rn');
+    const resp = await cli(args);
+    expect(resp).toBeTruthy()
+    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\\ComponentWithNoParam\\index.js"});
+    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\\ComponentWithNoParam\\styles.js"});
   })
   
   it('should FAIL if it already exists', async() => {
