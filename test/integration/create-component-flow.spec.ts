@@ -18,6 +18,9 @@ describe('Create Component Flow', () => {
     if (await filesManagerService.checkIfPathExists(testTargetDirectory))
       await filesManagerService.deleteDirectory(testTargetDirectory)
   });
+  afterEach(() => {
+    jest.clearAllMocks();
+  })
 
   it('should SUCCESS to create a component', async() => {
     const args = createCommandsArgs('rn -c ComponentAlreadyExists');
