@@ -47,14 +47,14 @@ export class FilesManagerService {
     }
   }
 
-  async writeFile(directoryPath: string, filePath:string, newContent:string) {
+  async writeFile(directoryPath: string, filePath:string, newContent:string): Promise<boolean> {
     try {
-      const resp = await writeFile(directoryPath + filePath, newContent);
+      await writeFile(directoryPath + filePath, newContent);
       new SuccessFileCreated(filePath)
-      return resp
+      return true
     } catch (error) {
       new FileNotWrittenException(filePath)
-      return null
+      return false
     }
   }
 

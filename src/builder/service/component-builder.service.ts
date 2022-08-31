@@ -34,14 +34,23 @@ export class ComponentBuilderService {
     const copyStatusList: boolean[] = [];
     const filesToBeCopyed = componentFilesToCopy[this.projectConfig.language][this.projectConfig.styleType]
     for (const file of filesToBeCopyed) {
-      copyStatusList.push(
-        await this.copyTemplateFile(componentName, file.templateFileName, file.fileName)
-      )
+      const templatePath = `${cliTemplatePath.component}\\${file.templateFileName}`;
+      const fileTargetPath = `\\${componentName}\\${file.fileName}`;
+      const copiedResponse = (file.shallRename) 
+        ? await this.createFile(templatePath, userProjectDirectory.component, fileTargetPath, componentName)
+        : await this.copyTemplateFile(templatePath, fileTargetPath); 
+      copyStatusList.push(copiedResponse);
     }
     return copyStatusList.every(status=>status);
   }
 
-  async copyTemplateFile(componentName: string, templateFileName: string, fileName: string): Promise<boolean> {
-    return await this.filesManagerService.copyFile(`${cliTemplatePath.component}\\${templateFileName}`, userProjectDirectory.component, `\\${componentName}\\${fileName}`);
+  async copyTemplateFile(templatePath: string, fileTargetPath: string): Promise<boolean> {
+    return await this.filesManagerService.copyFile(templatePath, userProjectDirectory.component, fileTargetPath);
+  }
+
+  async createFile(templatePath: string, fileDirectory:string, filePath: string, componentName: string): Promise<boolean> {
+    const fileData = await this.filesManagerService.readFile(templatePath);
+    const newContent = fileData!.replaceAll('MyComponent', componentName);
+    return await this.filesManagerService.writeFile(fileDirectory, filePath, newContent)
   }
 }
