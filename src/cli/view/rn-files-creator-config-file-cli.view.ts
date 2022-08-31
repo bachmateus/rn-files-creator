@@ -7,7 +7,8 @@ export class RnFilesCreatorConfigFileView {
     !(configFile.language) && questions.push(this.languageQuestion())
     !(configFile.styleType) && questions.push(this.styleQuestion())
     if(questions.length === 0) return configFile;
-    return await inquirer.prompt(questions)
+    const userAnswers = await inquirer.prompt(questions);
+    return { ...configFile, ...userAnswers }
   }
 
   private languageQuestion(): Answers{
