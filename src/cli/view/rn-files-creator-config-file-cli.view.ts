@@ -5,7 +5,7 @@ export class RnFilesCreatorConfigFileView {
   async askforMissingParams(configFile: RnFilesCreatorConfigFile) {
     const questions = [];
     !(configFile.language) && questions.push(this.languageQuestion())
-    !(configFile.language) && questions.push(this.styleQuestion())
+    !(configFile.styleType) && questions.push(this.styleQuestion())
     if(questions.length === 0) return configFile;
     return await inquirer.prompt(questions)
   }

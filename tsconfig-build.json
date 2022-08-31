@@ -6,9 +6,9 @@
     "src/**/*.spec.ts",
     "test/",
     "dev/",
-    "src/builder/templates/TypeScript/"
+    "src/builder/templates/"
   ],
   "include": [
-    "src/"
-  ]
+    "src/",
+  ],
 }

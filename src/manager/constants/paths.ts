@@ -12,6 +12,6 @@ export const userProjectDirectory = {
 }
 
 export const cliTemplatePath = {
-  component: `${cliPath}\\builder\\templates\\JavaScript\\component\\StyleSheet`
+  component: `${cliPath}\\builder\\templates\\component`
 }
 
