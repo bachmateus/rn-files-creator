@@ -5,7 +5,7 @@ import inquirer from 'inquirer';
 import { PromptLogger } from "../../../../src/common/logger/prompt-logger";
 
 jest.mock('../../../../src/common/logger/prompt-logger');
-const testTargetDirectory = process.cwd()+'\\test\\target-dir';
+const testTargetDirectory = process.cwd()+'\\test\\target-dir\\config-file-test';
 
 describe('Create config file flow', () => {
   beforeEach(() => {

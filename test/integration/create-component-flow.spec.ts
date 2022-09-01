@@ -6,7 +6,7 @@ import { rnFilesCreatorConfigFileService } from "../../src/cli/cli.module";
 import inquirer from 'inquirer';
 
 jest.mock('../../src/common/logger/prompt-logger');
-const testTargetDirectory = process.cwd()+'\\test\\target-dir';
+const testTargetDirectory = process.cwd()+'\\test\\target-dir\\component-test';
 
 describe('Create Component Flow', () => {
   beforeAll(async() => {
@@ -18,8 +18,9 @@ describe('Create Component Flow', () => {
     if (await filesManagerService.checkIfPathExists(testTargetDirectory))
       await filesManagerService.deleteDirectory(testTargetDirectory)
   });
-  afterEach(() => {
+  beforeEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks()
   })
 
   it('should SUCCESS to create a component', async() => {
@@ -30,7 +31,7 @@ describe('Create Component Flow', () => {
     expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\\ComponentAlreadyExists\\styles.js"});
   })
   it('should SUCCESS to create two components', async() => {
-    const args = createCommandsArgs('rn -c Component1 -c Component2');
+    const args = createCommandsArgs('rn -c Componentx21 -c Componentx22');
     const resp = await cli(args);
     expect(resp).toBeTruthy()
     expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\\Component1\\index.js"});

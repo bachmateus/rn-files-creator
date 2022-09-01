@@ -1,16 +1,25 @@
+import { componentCliService, rnFilesCreatorConfigFileService, userPromptedArgsCliService } from "./cli/cli.module";
 
 export async function cli(args:string[]) {
-  // const isReactNativeProject = libManager.isReactNativeProject(); 
+  // TODO: to be created
+  // const isReactNativeProject = libManagerService.isReactNativeProject(); 
+  const projectConfig = await rnFilesCreatorConfigFileService.handleGetUserRnConfigFile();
+  const userPromptedArgs = await userPromptedArgsCliService.handleGetUserPromptedArgs(args);
+  // TODO: check if it's -h and return the help txt
+  // TODO: check if it's -v and return the current version
 
-
-  const projectDir = __dirname.split("src")[0];
-  // const outputDir = projectDir + 'test/test-folder-output/';
-  const outputDir = 'C:\\projects\\rn-files-creator-remake\\';
-
-  // const fileHandler = new FileManagerEntity();
-  // const filePath = outputDir + 'teste3.ts';
-  // const content = `testing a file\n\n    testing\ntests`;
-  // const fileContent = await fileHandler.writeFile(filePath, content);
+  if (!userPromptedArgs) return;
   
-  // console.log(args, fileContent);
+  if (userPromptedArgs.component)
+    await componentCliService.handler({components: userPromptedArgs.component}, projectConfig)
+  
+  // TODO: create screen flow as it is today
+  // if (userPromptedArgs.screen)
+    // await componentCliService.handler({components: userPromptedArgs.component}, projectConfig)
+  
+  // TODO: create navigator flow
+  // if (userPromptedArgs.screen)
+    // await componentCliService.handler({components: userPromptedArgs.component}, projectConfig)
+  
+  return true
 }

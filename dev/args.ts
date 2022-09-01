@@ -4,13 +4,16 @@ export const defaultArgsPrompt = [
 ];
 
 const commands = {
-  createComponent: "rn -h -c Component1 -i Login -oo",
-  createComponentShort: "rn -c Component1",
+  empty: "rn",
+  createComponent: "rn -c Component1 -i Login -h",
+  createComponentShort: "rn -c Test2",
   createNavigator: "rn -n Login -n Logged -t stack -i MainNavigator -aaps",
   // createNavigatorShort: "rn -c Component1",
 }
 
-const argCommand = commands.createComponent.split(' ');
+const argCommand = commands.createComponentShort.split(' ');
+// const argCommand = commands.createComponent.split(' ');
+// const argCommand = commands.empty.split(' ');
 // const argCommand = commands.createNavigator.split(' ');
 argCommand.shift();
 

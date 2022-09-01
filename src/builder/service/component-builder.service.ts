@@ -6,15 +6,26 @@ import { componentFilesToCopy } from '../data/component-files-to-copy';
 
 export class ComponentBuilderService {
   private projectConfig: RnFilesCreatorConfigFile = {} as RnFilesCreatorConfigFile
-
+  filestoCopy: any
+  cliTemplatePath: string | undefined
+  projectTargetDiretory: string | undefined
   constructor(private filesManagerService: FilesManagerService) {}
   
-  async handle(components: string[], projectConfig: RnFilesCreatorConfigFile) {
-    this.projectConfig = projectConfig;
-
+  async handle(components: string[], projectConfig: RnFilesCreatorConfigFile): Promise<string[]> {
+    this.setConfigVars(projectConfig);
+    const componentsNotCreated = [];
     for (const component of components) {
-      await this.createComponent(component)
+      const wasCreated = await this.createComponent(component);
+      if (!wasCreated) componentsNotCreated.push(component)
     }
+    return componentsNotCreated
+  }
+
+  setConfigVars(projectConfig: RnFilesCreatorConfigFile): void{
+    this.projectConfig = projectConfig;
+    this.filestoCopy = componentFilesToCopy;
+    this.cliTemplatePath = cliTemplatePath.component;
+    this.projectTargetDiretory = userProjectDirectory.component;
   }
 
   async createComponent(componentName: string): Promise<boolean> {
@@ -24,28 +35,28 @@ export class ComponentBuilderService {
   }
 
   async checkIfComponentExists(componentName: string): Promise<boolean> {
-    const doesExist = await this.filesManagerService.checkIfPathExists(userProjectDirectory.component + componentName);
+    const doesExist = await this.filesManagerService.checkIfPathExists(this.projectTargetDiretory + componentName);
     if (doesExist) new ComponentAlreadyExistsLogger(componentName);
-    else await this.filesManagerService.createDirectory(userProjectDirectory.component + componentName)
+    else await this.filesManagerService.createDirectory(this.projectTargetDiretory + componentName)
     return doesExist;
   }
 
   async handleCopyTemplateFiles(componentName: string): Promise<boolean> {
     const copyStatusList: boolean[] = [];
-    const filesToBeCopyed = componentFilesToCopy[this.projectConfig.language][this.projectConfig.styleType]
+    const filesToBeCopyed = this.filestoCopy[this.projectConfig.language][this.projectConfig.styleType]
     for (const file of filesToBeCopyed) {
-      const templatePath = `${cliTemplatePath.component}\\${file.templateFileName}`;
+      const templatePath = `${this.cliTemplatePath}\\${file.templateFileName}`;
       const fileTargetPath = `\\${componentName}\\${file.fileName}`;
       const copiedResponse = (file.shallRename) 
-        ? await this.createFile(templatePath, userProjectDirectory.component, fileTargetPath, componentName)
-        : await this.copyTemplateFile(templatePath, fileTargetPath); 
+        ? await this.createFile(templatePath, this.projectTargetDiretory as string, fileTargetPath, componentName)
+        : await this.copyTemplateFile(templatePath, this.projectTargetDiretory as string, fileTargetPath); 
       copyStatusList.push(copiedResponse);
     }
     return copyStatusList.every(status=>status);
   }
 
-  async copyTemplateFile(templatePath: string, fileTargetPath: string): Promise<boolean> {
-    return await this.filesManagerService.copyFile(templatePath, userProjectDirectory.component, fileTargetPath);
+  async copyTemplateFile(templatePath: string, targetDirectory:string, fileTargetPath: string): Promise<boolean> {
+    return await this.filesManagerService.copyFile(templatePath, targetDirectory, fileTargetPath);
   }
 
   async createFile(templatePath: string, fileDirectory:string, filePath: string, componentName: string): Promise<boolean> {
