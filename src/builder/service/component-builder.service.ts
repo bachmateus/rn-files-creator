@@ -5,7 +5,7 @@ import { ComponentAlreadyExistsLogger } from "../logger/component-already-exists
 import { componentFilesToCopy } from '../data/component-files-to-copy';
 
 export class ComponentBuilderService {
-  private projectConfig: RnFilesCreatorConfigFile = {} as RnFilesCreatorConfigFile
+  projectConfig: RnFilesCreatorConfigFile = {} as RnFilesCreatorConfigFile
   filestoCopy: any
   cliTemplatePath: string | undefined
   projectTargetDiretory: string | undefined

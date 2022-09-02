@@ -1,6 +1,6 @@
 import inquirer, { Answers } from 'inquirer';
 import { validateComponentName } from '../../common/functions/validation';
-import { ComponentCliParams } from '../data/component-creator-params';
+import { ComponentCliParams } from '../data/creator-params';
 
 export class ComponentCliView {
   async askforMissingParams(componentCliParams: ComponentCliParams): Promise<ComponentCliParams> {
