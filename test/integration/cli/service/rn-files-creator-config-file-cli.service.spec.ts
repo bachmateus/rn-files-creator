@@ -1,11 +1,11 @@
-import { FilesManagerService } from "../../../../src/manager/service/files-manager.service";
+import inquirer from 'inquirer';
 import { rnFilesCreatorConfigFileService } from "../../../../src/cli/cli.module";
 import { filesManagerService } from "../../../../src/manager/manager.module";
-import inquirer from 'inquirer';
 import { PromptLogger } from "../../../../src/common/logger/prompt-logger";
+import { removeTestDir } from "../../../util/manager-test-folder"; 
 
 jest.mock('../../../../src/common/logger/prompt-logger');
-const testTargetDirectory = process.cwd()+'\\test\\target-dir\\config-file-test';
+const testTargetDirectory = process.cwd()+'\\test\\target-dir';
 
 describe('Create config file flow', () => {
   beforeEach(() => {
@@ -14,12 +14,11 @@ describe('Create config file flow', () => {
     jest.clearAllMocks();
   })
   beforeAll(async() => {
+    await removeTestDir()
     await filesManagerService.createDirectory(testTargetDirectory)
   })
   afterAll(async() => {
-    const filesManagerService = new FilesManagerService();
-    if (await filesManagerService.checkIfPathExists(testTargetDirectory))
-      await filesManagerService.deleteDirectory(testTargetDirectory)
+    await removeTestDir()
   });
 
   it('should SUCCESS to create a config file', async () => {

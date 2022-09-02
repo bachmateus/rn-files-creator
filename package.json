@@ -15,8 +15,8 @@
     "start:dev": "SET NODE_ENVIRONMENT=development & npx nodemon dev/index.ts",
     "build": "npx tsc -p tsconfig-build.json & npm run copy:template-files",
     "build:dev": "npm run build & npm run copy:template-files & npm link",
-    "test": "SET NODE_ENVIRONMENT=development & jest",
-    "test:coverage": "SET NODE_ENVIRONMENT=development & jest --coverage",
+    "test": "SET NODE_ENVIRONMENT=development & jest --runInBand",
+    "test:coverage": "SET NODE_ENVIRONMENT=development & jest --coverage --runInBand",
     "copy:template-files": "cp -R ./src/builder/templates/ ./build/builder/"
   },
   "keywords": [
