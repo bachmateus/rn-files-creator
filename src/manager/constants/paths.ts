@@ -8,10 +8,12 @@ export const cliPath = path.resolve(
 );
 
 export const userProjectDirectory = {
-  component: `${userProjectPath}\\src\\components\\`
+  component: `${userProjectPath}\\src\\components\\`,
+  screen: `${userProjectPath}\\src\\screens\\`
 }
 
 export const cliTemplatePath = {
-  component: `${cliPath}\\builder\\templates\\component`
+  component: `${cliPath}\\builder\\templates\\component`,
+  screen: `${cliPath}\\builder\\templates\\component`
 }
 

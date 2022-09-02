@@ -1,4 +1,4 @@
-import { componentCliService, rnFilesCreatorConfigFileService, userPromptedArgsCliService } from "./cli/cli.module";
+import { componentCliService, rnFilesCreatorConfigFileService, screenCliService, userPromptedArgsCliService } from "./cli/cli.module";
 
 export async function cli(args:string[]) {
   // TODO: to be created
@@ -14,8 +14,8 @@ export async function cli(args:string[]) {
     await componentCliService.handler({components: userPromptedArgs.component}, projectConfig)
   
   // TODO: create screen flow as it is today
-  // if (userPromptedArgs.screen)
-    // await componentCliService.handler({components: userPromptedArgs.component}, projectConfig)
+  if (userPromptedArgs.screen)
+    await screenCliService.handler({screens: userPromptedArgs.screen}, projectConfig)
   
   // TODO: create navigator flow
   // if (userPromptedArgs.screen)
