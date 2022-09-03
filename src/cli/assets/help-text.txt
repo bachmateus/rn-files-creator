@@ -1,0 +1,6 @@
+
+rn <command>
+
+Usage:
+-c, --component     Create component
+-s, --screen        Create screen

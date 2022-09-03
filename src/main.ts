@@ -1,19 +1,23 @@
 import { componentCliService, rnFilesCreatorConfigFileService, screenCliService, userPromptedArgsCliService } from "./cli/cli.module";
+import { helpCliService } from "./cli/cli.module";
 
 export async function cli(args:string[]) {
   // TODO: to be created
   // const isReactNativeProject = libManagerService.isReactNativeProject(); 
-  const projectConfig = await rnFilesCreatorConfigFileService.handleGetUserRnConfigFile();
   const userPromptedArgs = await userPromptedArgsCliService.handleGetUserPromptedArgs(args);
-  // TODO: check if it's -h and return the help txt
-  // TODO: check if it's -v and return the current version
-
   if (!userPromptedArgs) return;
+  
+  if (userPromptedArgs.isHelp){
+    await helpCliService.handle();
+    return
+  }
+  const projectConfig = await rnFilesCreatorConfigFileService.handleGetUserRnConfigFile();
+
+  // TODO: check if it's -v and return the current version
   
   if (userPromptedArgs.component)
     await componentCliService.handler({components: userPromptedArgs.component}, projectConfig)
   
-  // TODO: create screen flow as it is today
   if (userPromptedArgs.screen)
     await screenCliService.handler({screens: userPromptedArgs.screen}, projectConfig)
   
