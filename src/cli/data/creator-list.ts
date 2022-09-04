@@ -1,4 +1,4 @@
-export const creatorList = ['component', 'screen', 'navigator'] as const;
+export const creatorList = ['component', 'screen'] as const;
 
 type ElementType < T extends ReadonlyArray < unknown > > = T extends ReadonlyArray<
   infer ElementType

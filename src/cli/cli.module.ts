@@ -6,15 +6,28 @@ import { ComponentCliService } from "./service/component-cli.service";
 import { ComponentCliView } from "./view/component-cli.view";
 import { ScreenCliService } from "./service/screen-cli.service";
 import { ScreenCliView } from "./view/screen-cli.view";
+import { HelpCliView } from "./view/help-cli-view";
+import { HelpCliService } from "./service/help-cli.service";
 import { UserPromptedArgsCliService } from "./service/user-prompted-args-cli.service";
 
-export const rnFilesCreatorConfigFileView = new RnFilesCreatorConfigFileView();
-export const rnFilesCreatorConfigFileService = new RnFilesCreatorConfigFileService(filesManagerService, rnFilesCreatorConfigFileView);
+const rnFilesCreatorConfigFileView = new RnFilesCreatorConfigFileView();
+const rnFilesCreatorConfigFileService = new RnFilesCreatorConfigFileService(filesManagerService, rnFilesCreatorConfigFileView);
 
-export const componentCliView = new ComponentCliView();
-export const componentCliService = new ComponentCliService(componentCliView, componentBuilderService);
+const componentCliView = new ComponentCliView();
+const componentCliService = new ComponentCliService(componentCliView, componentBuilderService);
 
-export const screenCliView = new ScreenCliView();
-export const screenCliService = new ScreenCliService(screenCliView, screenBuilderService);
+const screenCliView = new ScreenCliView();
+const screenCliService = new ScreenCliService(screenCliView, screenBuilderService);
 
-export const userPromptedArgsCliService = new UserPromptedArgsCliService();
+const helpCliView = new HelpCliView();
+const helpCliService = new HelpCliService(filesManagerService, helpCliView)  
+
+const userPromptedArgsCliService = new UserPromptedArgsCliService();
+
+export {
+  rnFilesCreatorConfigFileService,
+  componentCliService,
+  screenCliService,
+  helpCliService,
+  userPromptedArgsCliService
+}
