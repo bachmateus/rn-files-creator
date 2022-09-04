@@ -3,7 +3,7 @@ import { ErrorFileCreated } from '../logger/error-file-created.logger';
 import { FileNotFoundException } from '../logger/file-not-found.logger';
 import { FileNotWrittenException } from '../logger/file-not-written.logger';
 import { SuccessFileCreated } from '../logger/success-file-created.logger';
-const { mkdir, stat, copyFile, readFile, writeFile, rmdir } = fs;
+const { mkdir, stat, copyFile, readFile, writeFile, rm } = fs;
 
 export class FilesManagerService {
   async checkIfPathExists(filePath: string): Promise<boolean> {
@@ -60,7 +60,7 @@ export class FilesManagerService {
 
   async deleteDirectory(targetDirectory:string) {
     try {
-      return await rmdir(targetDirectory, {recursive:true});
+      return await rm(targetDirectory, {recursive:true});
     } catch (e){
       return null;
     }

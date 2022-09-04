@@ -16,6 +16,7 @@
     "build": "npx tsc -p tsconfig-build.json & npm run copy:files",
     "build:dev": "npm run build & npm run copy:files & npm link",
     "test": "SET NODE_ENVIRONMENT=development & jest --runInBand",
+    "test:watch": "SET NODE_ENVIRONMENT=development & jest --runInBand --watch",
     "test:coverage": "SET NODE_ENVIRONMENT=development & jest --coverage --runInBand",
     "copy:files": "npm run copy:template-files & npm run copy:assets-files",
     "copy:template-files": "cp -R ./src/builder/templates/ ./build/builder/",

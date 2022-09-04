@@ -7,7 +7,8 @@ import { componentCliService, rnFilesCreatorConfigFileService, screenCliService 
 describe('Help Flow', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    jest.restoreAllMocks()
+    jest.restoreAllMocks();
+    jest.spyOn(console, 'log').mockImplementation()
   })
 
   it('should SUCCESS to show help commands', async() => {
