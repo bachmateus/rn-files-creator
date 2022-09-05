@@ -25,7 +25,7 @@ describe('Create config file flow', () => {
     jest.spyOn(inquirer, 'prompt').mockResolvedValueOnce(Promise.resolve({ language: 'JavaScript', styleType: 'styled-component'}))
     const response = await rnFilesCreatorConfigFileService.handleGetUserRnConfigFile();
     expect(response).toEqual({"language":"JavaScript","styleType":"styled-component"})
-    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\\rn-files-config-service.json"});
+    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\\rn-files-creator.json"});
   })
   it('should SUCCESS to get a created config file', async () => {
     const response = await rnFilesCreatorConfigFileService.handleGetUserRnConfigFile();

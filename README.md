@@ -18,17 +18,14 @@ You can install via npm:
 # Features
 Create React Native files.
 
-1. Create component files using JavaScript.
-2. Create component files using TypeScript.
-3. Create style file using StyleSheet.
-4. Create style file using StyledComponent.
-5. Create a config file to store your preferences.
+1. Create component/screen files using JavaScript.
+2. Create component/screen files using TypeScript.
+3. Create a config file to store your preferences.
 
 # Project folders structure
 `rn-files-creator` use the following project structure to create the component.
 
   ```bash
-  root
   +-- src
       +-- components
           +-- ComponentName
@@ -38,7 +35,7 @@ Create React Native files.
           +-- ScreenName
               +-- index.js
               +-- styles.js
-  +-- rn-creator1.json
+  +-- rn-files-creator.json
   ```
 
 
@@ -54,10 +51,11 @@ Type the following command to create a component
   ```bash
   rn -c ComponentName
   ```
-If you want to create more than one component, you can separe the components name using space
+
+You can use more than one arg per time to create more than one component
 
   ```bash
-  rn -c ComponentName1 ComponentName2 ComponentName3 ComponentName4
+  rn -c ComponentName1 -c ComponentName2 -c ComponentName3 -c ComponentName4
   ```
 
 ## Creating a Screen
@@ -66,10 +64,11 @@ Type the following command to create a screen
   ```bash
   rn -s ScreenName
   ```
-If you want to create more than one screen, you can separe the screen name using space
+
+You can use more than one arg per time to create more than one screen
 
   ```bash
-  rn -s ScreenName1 ScreenName2 ScreenName3 ScreenName4
+  rn -s ScreenName1 -s ScreenName2 -s ScreenName3 -s ScreenName4
   ```
 
 ## Creating guide
@@ -84,21 +83,12 @@ After typing enter just follow the guide.
 
 # Command list
 
-| Comand          | Description                                                   |
-| --------------- | ------------------------------------------------------------- |
-| -c, component   | Create one or more components                                 |
-| -h, help        | Show possible commands                                        |
-| -s, screen      | Create one or more screens                                    |
+| Comand            | Description                                                   |
+| ----------------- | ------------------------------------------------------------- |
+| -c, --component   | Create one or more components                                 |
+| -h, --help        | Show possible commands                                        |
+| -s, --screen      | Create one or more screens                                    |
 
-
-# Dependencies used
-This project has some lib that can be divided in x groups: 
-## Prompt dependencies
-- arg: set project args, recive users params and separe in arrays
-- chalk: enable to colorfy text on terminal
-- inquirer: enable to ask user question, create options, etc.
-## 
--esm
 
 ### Known issues
 1. It does not work on MacOS.
