@@ -1,5 +1,4 @@
 node_modules/
-meu/
-finalizado/
-src_old/
-tests/
+test/target-dir/
+build/
+coverage/
