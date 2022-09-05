@@ -4,6 +4,8 @@ import { RnFilesCreatorConfigFile } from "../data/rn-files-creator-config-file";
 import { RnFilesCreatorConfigFileView } from "../view/rn-files-creator-config-file-cli.view";
 
 export class RnFilesCreatorConfigFileService {
+  private configFileName = "rn-files-creator.json";
+  
   constructor(
     private filesManagerService: FilesManagerService,
     private rnFilesCreatorConfigFileView: RnFilesCreatorConfigFileView
@@ -18,12 +20,12 @@ export class RnFilesCreatorConfigFileService {
   }
 
   private async getUserRnConfigFile(): Promise<RnFilesCreatorConfigFile> {
-    const rnConfigFileContent = await this.filesManagerService.readFile(userProjectPath + '\\rn-files-config-service.json');
+    const rnConfigFileContent = await this.filesManagerService.readFile(`${userProjectPath}\\${this.configFileName}`);
     const rnConfigFile = rnConfigFileContent ? JSON.parse(rnConfigFileContent) : {};
     return rnConfigFile;
   }
 
   private async updateUserRnConfigFile(rnConfigFile: RnFilesCreatorConfigFile){
-    await this.filesManagerService.writeFile(userProjectPath, '\\rn-files-config-service.json', JSON.stringify(rnConfigFile));
+    await this.filesManagerService.writeFile(userProjectPath, `\\${this.configFileName}`, JSON.stringify(rnConfigFile));
   }
 }
