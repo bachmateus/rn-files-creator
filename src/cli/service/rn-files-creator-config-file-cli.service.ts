@@ -20,12 +20,12 @@ export class RnFilesCreatorConfigFileService {
   }
 
   private async getUserRnConfigFile(): Promise<RnFilesCreatorConfigFile> {
-    const rnConfigFileContent = await this.filesManagerService.readFile(`${userProjectPath}\\${this.configFileName}`);
+    const rnConfigFileContent = await this.filesManagerService.readFile(`${userProjectPath}\/${this.configFileName}`);
     const rnConfigFile = rnConfigFileContent ? JSON.parse(rnConfigFileContent) : {};
     return rnConfigFile;
   }
 
   private async updateUserRnConfigFile(rnConfigFile: RnFilesCreatorConfigFile){
-    await this.filesManagerService.writeFile(userProjectPath, `\\${this.configFileName}`, JSON.stringify(rnConfigFile));
+    await this.filesManagerService.writeFile(userProjectPath, `\/${this.configFileName}`, JSON.stringify(rnConfigFile));
   }
 }

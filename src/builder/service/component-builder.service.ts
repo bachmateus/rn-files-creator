@@ -45,8 +45,8 @@ export class ComponentBuilderService {
     const copyStatusList: boolean[] = [];
     const filesToBeCopyed = this.filestoCopy[this.projectConfig.language][this.projectConfig.styleType]
     for (const file of filesToBeCopyed) {
-      const templatePath = `${this.cliTemplatePath}\\${file.templateFileName}`;
-      const fileTargetPath = `\\${componentName}\\${file.fileName}`;
+      const templatePath = `${this.cliTemplatePath}\/${file.templateFileName}`;
+      const fileTargetPath = `\/${componentName}\/${file.fileName}`;
       const copiedResponse = (file.shallRename) 
         ? await this.createFile(templatePath, this.projectTargetDiretory as string, fileTargetPath, componentName)
         : await this.copyTemplateFile(templatePath, this.projectTargetDiretory as string, fileTargetPath); 
