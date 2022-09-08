@@ -61,7 +61,7 @@ export class ComponentBuilderService {
 
   async createFile(templatePath: string, fileDirectory:string, filePath: string, componentName: string): Promise<boolean> {
     const fileData = await this.filesManagerService.readFile(templatePath);
-    const newContent = fileData!.replaceAll('MyComponent', componentName);
+    const newContent = fileData!.replace('MyComponent', componentName).replace('MyComponent', componentName);
     return await this.filesManagerService.writeFile(fileDirectory, filePath, newContent)
   }
 }

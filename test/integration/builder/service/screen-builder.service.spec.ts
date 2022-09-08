@@ -21,7 +21,7 @@ describe('Screen builder', () => {
   it('should SUCCESS to create a screen', async() => {
     const screensNames = ['Screen1'];
     await screenBuilderService.handle(screensNames, javascriptConfigFile);
-    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\\Screen1\\index.js"});
-    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\\Screen1\\styles.js"});
+    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\/Screen1\/index.js"});
+    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\/Screen1\/styles.js"});
   })
 })

@@ -26,17 +26,17 @@ describe('Create Component Flow', () => {
     const args = createCommandsArgs('rn -c Component');
     const resp = await cli(args);
     expect(resp).toBeTruthy()
-    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\\Component\\index.js"});
-    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\\Component\\styles.js"});
+    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\/Component\/index.js"});
+    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\/Component\/styles.js"});
   })
   it('should SUCCESS to create two components', async() => {
     const args = createCommandsArgs('rn -c Componentx21 -c Componentx22');
     const resp = await cli(args);
     expect(resp).toBeTruthy()
-    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\\Componentx21\\index.js"});
-    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\\Componentx21\\styles.js"});
-    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\\Componentx21\\index.js"});
-    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\\Componentx21\\styles.js"});
+    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\/Componentx21\/index.js"});
+    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\/Componentx21\/styles.js"});
+    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\/Componentx21\/index.js"});
+    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\/Componentx21\/styles.js"});
   })
   it('should SUCCESS to create a component if arg -c was not passed', async() => {
     jest.spyOn(inquirer, 'prompt').mockResolvedValueOnce(Promise.resolve({ creator: 'component' }))
@@ -44,8 +44,8 @@ describe('Create Component Flow', () => {
     const args = createCommandsArgs('rn');
     const resp = await cli(args);
     expect(resp).toBeTruthy()
-    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\\ComponentWithNoParam\\index.js"});
-    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\\ComponentWithNoParam\\styles.js"});
+    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\/ComponentWithNoParam\/index.js"});
+    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\/ComponentWithNoParam\/styles.js"});
   })
   
   it('should FAIL if it already exists', async() => {
