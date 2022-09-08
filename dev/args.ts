@@ -6,7 +6,7 @@ export const defaultArgsPrompt = [
 const commands = {
   empty: "rn",
   createComponent: "rn -c Component1 -i Login -h",
-  createComponentShort: "rn --screen A1 --component B1",
+  createComponentShort: "rn --screen A4 --component A4",
   createNavigator: "rn -n Login -n Logged -t stack -i MainNavigator -aaps",
   // createNavigatorShort: "rn -c Component1",
 }
