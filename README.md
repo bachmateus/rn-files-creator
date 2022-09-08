@@ -3,6 +3,8 @@
 
 `rn-files-creator` make it easier to create new React Native components files. It provides a basic file structure for your components with StyleSheet or StyledComponent.
 
+Works on Windows, Linux and MacOS
+
 ![](logo.png)
 
 # CAUTION
@@ -88,11 +90,6 @@ After typing enter just follow the guide.
 | -c, --component   | Create one or more components                                 |
 | -h, --help        | Show possible commands                                        |
 | -s, --screen      | Create one or more screens                                    |
-
-
-### Known issues
-1. It does not work on MacOS.
-2. It has not been tested on Linux
 
 # Inspiration
 I want to thank DOMINIK KUNDEL. I watched his video to learn how to create a CLI.
