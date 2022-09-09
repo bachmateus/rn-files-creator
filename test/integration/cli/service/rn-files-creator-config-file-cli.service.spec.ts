@@ -5,7 +5,7 @@ import { PromptLogger } from "../../../../src/common/logger/prompt-logger";
 import { removeTestDir } from "../../../util/manager-test-folder"; 
 
 jest.mock('../../../../src/common/logger/prompt-logger');
-const testTargetDirectory = process.cwd()+'\\test\\target-dir';
+const testTargetDirectory = process.cwd()+'\/test\/target-dir';
 
 describe('Create config file flow', () => {
   beforeEach(() => {
@@ -25,7 +25,7 @@ describe('Create config file flow', () => {
     jest.spyOn(inquirer, 'prompt').mockResolvedValueOnce(Promise.resolve({ language: 'JavaScript', styleType: 'styled-component'}))
     const response = await rnFilesCreatorConfigFileService.handleGetUserRnConfigFile();
     expect(response).toEqual({"language":"JavaScript","styleType":"styled-component"})
-    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\\rn-files-creator.json"});
+    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\/rn-files-creator.json"});
   })
   it('should SUCCESS to get a created config file', async () => {
     const response = await rnFilesCreatorConfigFileService.handleGetUserRnConfigFile();

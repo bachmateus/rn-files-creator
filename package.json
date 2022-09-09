@@ -1,6 +1,6 @@
 {
   "name": "@bachmateus/rn-files-creator",
-  "version": "2.0.0",
+  "version": "2.0.4",
   "description": "rn-files-creator make easier to create new React Native components files. It provides a basic file structure for your components with StyleSheet or StyledComponent.",
   "main": "src/main.js",
   "bin": {
@@ -11,7 +11,7 @@
     "access": "public"
   },
   "scripts": {
-    "start": "ts-node dev/index.ts",
+    "start": "SET NODE_ENVIRONMENT=development & ts-node dev/index.ts",
     "start:dev": "SET NODE_ENVIRONMENT=development & npx nodemon dev/index.ts",
     "build": "npx tsc -p tsconfig-build.json & npm run copy:files",
     "build:dev": "npm run build & npm run copy:files & npm link",
@@ -20,7 +20,8 @@
     "test:coverage": "SET NODE_ENVIRONMENT=development & jest --coverage --runInBand",
     "copy:files": "npm run copy:template-files & npm run copy:assets-files",
     "copy:template-files": "cp -R ./src/builder/templates/ ./build/builder/",
-    "copy:assets-files": "cp -R ./src/cli/assets/ ./build/cli/assets/"
+    "copy:assets-files": "cp -R ./src/cli/assets/ ./build/cli/assets/",
+    "deploy": "npm run build & npm publish"
   },
   "keywords": [
     "cli",

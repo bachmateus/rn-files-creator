@@ -26,17 +26,17 @@ describe('Create Screen Flow', () => {
     const args = createCommandsArgs('rn -c Screen');
     const resp = await cli(args);
     expect(resp).toBeTruthy()
-    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\\Screen\\index.js"});
-    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\\Screen\\styles.js"});
+    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\/Screen\/index.js"});
+    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\/Screen\/styles.js"});
   })
   it('should SUCCESS to create two screens', async() => {
     const args = createCommandsArgs('rn -c Screenx21 -c Screenx22');
     const resp = await cli(args);
     expect(resp).toBeTruthy()
-    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\\Screenx21\\index.js"});
-    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\\Screenx21\\styles.js"});
-    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\\Screenx21\\index.js"});
-    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\\Screenx21\\styles.js"});
+    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\/Screenx21\/index.js"});
+    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\/Screenx21\/styles.js"});
+    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\/Screenx21\/index.js"});
+    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\/Screenx21\/styles.js"});
   })
   it('should SUCCESS to create a screen if arg -c was not passed', async() => {
     jest.spyOn(inquirer, 'prompt').mockResolvedValueOnce(Promise.resolve({ creator: 'screen' }))
@@ -44,8 +44,8 @@ describe('Create Screen Flow', () => {
     const args = createCommandsArgs('rn');
     const resp = await cli(args);
     expect(resp).toBeTruthy()
-    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\\ScreenWithNoParam\\index.js"});
-    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\\ScreenWithNoParam\\styles.js"});
+    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\/ScreenWithNoParam\/index.js"});
+    expect(PromptLogger).toHaveBeenCalledWith({"interruptProcess": false, "loggerType": "CREATE", "message": "\/ScreenWithNoParam\/styles.js"});
   })
   
   it('should FAIL if it already exists', async() => {

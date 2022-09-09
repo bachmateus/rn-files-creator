@@ -3,6 +3,7 @@ import { cliTemplatePath, userProjectDirectory } from "../../manager/constants/p
 import { FilesManagerService } from "../../manager/service/files-manager.service";
 import { ComponentAlreadyExistsLogger } from "../logger/component-already-exists.logger";
 import { componentFilesToCopy } from '../data/component-files-to-copy';
+import { NativeStringFunction } from '../../common/functions/nativeStringFunction';
 
 export class ComponentBuilderService {
   projectConfig: RnFilesCreatorConfigFile = {} as RnFilesCreatorConfigFile
@@ -45,8 +46,8 @@ export class ComponentBuilderService {
     const copyStatusList: boolean[] = [];
     const filesToBeCopyed = this.filestoCopy[this.projectConfig.language][this.projectConfig.styleType]
     for (const file of filesToBeCopyed) {
-      const templatePath = `${this.cliTemplatePath}\\${file.templateFileName}`;
-      const fileTargetPath = `\\${componentName}\\${file.fileName}`;
+      const templatePath = `${this.cliTemplatePath}\/${file.templateFileName}`;
+      const fileTargetPath = `\/${componentName}\/${file.fileName}`;
       const copiedResponse = (file.shallRename) 
         ? await this.createFile(templatePath, this.projectTargetDiretory as string, fileTargetPath, componentName)
         : await this.copyTemplateFile(templatePath, this.projectTargetDiretory as string, fileTargetPath); 
@@ -61,7 +62,7 @@ export class ComponentBuilderService {
 
   async createFile(templatePath: string, fileDirectory:string, filePath: string, componentName: string): Promise<boolean> {
     const fileData = await this.filesManagerService.readFile(templatePath);
-    const newContent = fileData!.replaceAll('MyComponent', componentName);
+    const newContent = NativeStringFunction.replaceAll(fileData!, 'MyComponent', componentName);
     return await this.filesManagerService.writeFile(fileDirectory, filePath, newContent)
   }
 }
