@@ -1,9 +1,10 @@
 import { componentCliService, rnFilesCreatorConfigFileService, screenCliService, userPromptedArgsCliService } from "./cli/cli.module";
 import { helpCliService } from "./cli/cli.module";
+import { packagesManagerService } from "./manager/manager.module";
 
 export async function cli(args:string[]) {
-  // TODO: to be created
-  // const isReactNativeProject = libManagerService.isReactNativeProject(); 
+  await packagesManagerService.isReactNativeProject(); 
+  
   const userPromptedArgs = await userPromptedArgsCliService.handleGetUserPromptedArgs(args);
   if (!userPromptedArgs) return;
   

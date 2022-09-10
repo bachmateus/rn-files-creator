@@ -4,7 +4,7 @@ import { PromptLogger } from '../../src/common/logger/prompt-logger';
 import { createCommandsArgs } from "../util/create-commands-args";
 import { rnFilesCreatorConfigFileService } from "../../src/cli/cli.module";
 import { removeTestDir } from "../util/manager-test-folder"; 
-import { filesManagerService } from "../../src/manager/manager.module";
+import { filesManagerService, packagesManagerService } from "../../src/manager/manager.module";
 
 jest.mock('../../src/common/logger/prompt-logger');
 
@@ -20,6 +20,7 @@ describe('Create Component Flow', () => {
     jest.clearAllMocks();
     jest.restoreAllMocks()
     jest.spyOn(rnFilesCreatorConfigFileService, 'handleGetUserRnConfigFile').mockReturnValue(Promise.resolve({language: 'JavaScript', styleType: 'StyleSheet'}))
+    jest.spyOn(packagesManagerService, 'isReactNativeProject').mockReturnValue(Promise.resolve(true))
   })
 
   it('should SUCCESS to create a component', async() => {
