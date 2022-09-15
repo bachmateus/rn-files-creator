@@ -1,6 +1,6 @@
 import { cli } from "../../src/main";
 import { createCommandsArgs } from "../util/create-commands-args";
-import { filesManagerService } from "../../src/manager/manager.module";
+import { filesManagerService, packagesManagerService } from "../../src/manager/manager.module";
 import { txtHelpFile } from "../../src/manager/constants/paths";
 import { componentCliService, rnFilesCreatorConfigFileService, screenCliService } from "../../src/cli/cli.module";
 
@@ -9,6 +9,7 @@ describe('Help Flow', () => {
     jest.clearAllMocks();
     jest.restoreAllMocks();
     jest.spyOn(console, 'log').mockImplementation()
+    jest.spyOn(packagesManagerService, 'isReactNativeProject').mockReturnValue(Promise.resolve(true))
   })
 
   it('should SUCCESS to show help commands', async() => {
