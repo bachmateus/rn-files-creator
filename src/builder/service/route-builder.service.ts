@@ -15,7 +15,10 @@ export class RouteBuilderService {
 
   async handle(routeCliParams: RouteCliParams, projectConfig: RnFilesCreatorConfigFile) {
     this.setConfigVars(routeCliParams, projectConfig);
-    this.createRoute();
+    const wasRouteCreated = await this.createRoute();
+    // TODO: create main route
+    // TODO: include route on main route or where it belongs
+    // TODO: return which libs the cli shall install
   }
 
   private setConfigVars(routeCliParams: RouteCliParams, projectConfig: RnFilesCreatorConfigFile) {
@@ -26,15 +29,16 @@ export class RouteBuilderService {
   private async createRoute(): Promise<boolean> {
     // TODO: if fail remove dir
     const { fileName, templateFileName} = routeFileToCopy[this.projectConfig.language](this.routeCliParams.route);
-    if (await this.checkIfRouteExists()) return false;
+    if (await this.checkIfRouteExists(fileName)) return false;
     return await this.createRouteFile(this.routeCliParams.route, this.routeCliParams.routeType, fileName, templateFileName);
   }
 
-  private async checkIfRouteExists(): Promise<boolean> {
+  private async checkIfRouteExists(fileName: string): Promise<boolean> {
     const routeName = this.routeCliParams.route;
-    const doesExist = await this.filesManagerService.checkIfPathExists(`${userProjectDirectory.route}\/${routeName}.js`);
+    const doesExist = await this.filesManagerService.checkIfPathExists(`${userProjectDirectory.route}\/${fileName}`);
     if (doesExist) new ComponentAlreadyExistsLogger(routeName);
-    else await this.filesManagerService.createDirectory(userProjectDirectory.route)
+    const doesPathExist = await this.filesManagerService.checkIfPathExists(`${userProjectDirectory.route}\/`);
+    if (!doesPathExist) await this.filesManagerService.createDirectory(userProjectDirectory.route)
     return doesExist;
   }
 
