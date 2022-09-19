@@ -10,12 +10,14 @@ export const cliPath = path.resolve(
 export const userProjectDirectory = {
   component: `${userProjectPath}\/src\/components\/`,
   screen: `${userProjectPath}\/src\/screens\/`,
+  route: `${userProjectPath}\/src\/routes\/`,
   packageJson: `${userProjectPath}\/package.json`
 }
 
 export const cliTemplatePath = {
   component: `${cliPath}\/builder\/templates\/component`,
-  screen: `${cliPath}\/builder\/templates\/component`
+  screen: `${cliPath}\/builder\/templates\/component`,
+  route: `${cliPath}\/builder\/templates\/routes`,
 }
 
 export const txtHelpFile = `${cliPath}\/cli\/assets\/help-text.txt`
