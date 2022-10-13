@@ -7,7 +7,7 @@ const commands = {
   empty: "rn",
   createComponent: "rn -c Component1 -c Component2",
   createComponentShort: "rn --screen A4 --component A4",
-  createRoute: "rn -r routes -t bottomTab",
+  createRoute: "rn -r RecipeRoutes -t bottomTab",
   // createRoute: "rn -r Login -r Logged -t stack -i MainRoute -aaps",
   // createRoute: "rn -r Login -r Logged -t stack -i MainRoute -aaps",
   // createRouteShort: "rn -c Component1",

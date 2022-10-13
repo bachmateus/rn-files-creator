@@ -20,7 +20,7 @@ export class RouteCliService {
     this.routeCliParams = await this.routeCliView.askForMissingParams(this.routeCliParams);
     this.validateRouteName();
 
-    this.routeBuilderService.handle(this.routeCliParams, projectConfig);
+    await this.routeBuilderService.handle(this.routeCliParams, projectConfig);
     return true; 
   }
   
@@ -33,6 +33,8 @@ export class RouteCliService {
     const validComponentsName = validateComponentName(this.routeCliParams.route);
     if (!validComponentsName) new InvalidComponentNameLogger([this.routeCliParams.route]);
     this.routeCliParams.route = formatComponentName(this.routeCliParams.route);
-    if (this.routeCliParams.route.indexOf('Route') === -1) this.routeCliParams.route = `${this.routeCliParams.route}Routes`
+    if (this.routeCliParams.route.indexOf('Route') === -1) this.routeCliParams.route = `${this.routeCliParams.route}Routes`;
+    // TODO: create an specific message for this case
+    if (this.routeCliParams.route==='Route'||this.routeCliParams.route==='Routes') new InvalidComponentNameLogger([this.routeCliParams.route]);
   }
 }

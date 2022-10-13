@@ -1,12 +1,11 @@
 import { routeBuilderService } from "../../../../src/builder/builder.module";
-import { routeFileToCopy, routeWordsToRename } from "../../../../src/builder/data/route-words-to-rename";
+import { routeFileToCopy, routeWordsToRename } from "../../../../src/builder/data/route-constants";
 import { routesTypesEnum } from "../../../../src/cli/data/args-cli-options";
 import { RnFilesCreatorConfigFile } from "../../../../src/cli/data/rn-files-creator-config-file";
 import { cliTemplatePath, userProjectDirectory } from "../../../../src/manager/constants/paths";
 import { filesManagerService } from "../../../../src/manager/manager.module";
-import { createTestDir, removeTestDir } from "../../../util/manager-test-folder";
+import { removeTestDir } from "../../../util/manager-test-folder";
 
-jest.mock('../../../../src/common/logger/prompt-logger');
 const javascriptConfigFile:RnFilesCreatorConfigFile = { language:'TypeScript', styleType: 'StyleSheet' }
 
 describe('Route builder', () => {
@@ -14,7 +13,7 @@ describe('Route builder', () => {
     await removeTestDir()
   });
   afterAll(async() => {
-    // await removeTestDir()
+    await removeTestDir()
   });
   beforeEach(() => {
     jest.clearAllMocks();
@@ -42,5 +41,16 @@ describe('Route builder', () => {
     
     const resp = await filesManagerService.readFile(`${userProjectDirectory.route}\/${fileName}`) as string;
     expect(resp).toContain(routeName);
+  });
+
+  it('should include route import on nested one', async() => {
+    const nestedRoute = 'HomeRoutes';
+    const route = 'AppRoutes';
+    await routeBuilderService['setConfigVars']({route, routeType: routesTypesEnum.stack}, javascriptConfigFile);
+    await routeBuilderService['createRoute']()
+    await routeBuilderService['setConfigVars']({route: nestedRoute, routeType: routesTypesEnum.bottomTab}, javascriptConfigFile);
+    await routeBuilderService['createRoute']()
+    await routeBuilderService['createMainRouteFile'](javascriptConfigFile.language)
+    expect(await routeBuilderService['includeRouteOnMainRoute'](nestedRoute, 'AppRoutes', javascriptConfigFile.language)).toBeTruthy();
   })
 })
