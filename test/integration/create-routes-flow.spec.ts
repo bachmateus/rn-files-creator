@@ -34,8 +34,7 @@ describe('Create Routes Flow', () => {
     expect(consoleLogSpy).toBeCalledTimes(3);
     expect(consoleLogSpy).toHaveBeenNthCalledWith(1, LoggerColor.CREATE, routeFileName);
     expect(consoleLogSpy).toHaveBeenNthCalledWith(2, LoggerColor.CREATE, "index.js");
-    // TODO: alterar quando o update tiver pronto
-    // expect(consoleLogSpy).toHaveBeenNthCalledWith(3, LoggerColor.UPDATE, "index.js");
+    expect(consoleLogSpy).toHaveBeenNthCalledWith(3, LoggerColor.UPDATE, "index.js");
     const routeContent = await filesManagerService.readFile(userProjectDirectory.route+routeFileName);
     const mainRouteContent = await filesManagerService.readFile(mainRouteFilePath)
     
@@ -53,18 +52,14 @@ describe('Create Routes Flow', () => {
     expect(await cli(args1)).toBeTruthy();
     expect(consoleLogSpy).toHaveBeenNthCalledWith(1, LoggerColor.CREATE, route1FileName);
     expect(consoleLogSpy).toHaveBeenNthCalledWith(2, LoggerColor.CREATE, "index.js");
-    expect(consoleLogSpy).toHaveBeenNthCalledWith(3, LoggerColor.CREATE, "index.js");
-    // TODO: alterar quando o update tiver pronto
-    // expect(consoleLogSpy).toHaveBeenNthCalledWith(3, LoggerColor.UPDATE, "index.js");
+    expect(consoleLogSpy).toHaveBeenNthCalledWith(3, LoggerColor.UPDATE, "index.js");
     
     const route2 = 'TestRoute2';
     const route2FileName = generateRouteNameFile(route2) + '.js';
     const args2 = createCommandsArgs(`rn -r ${route2} -t bottomTab`);
     expect(await cli(args2)).toBeTruthy();
     expect(consoleLogSpy).toHaveBeenNthCalledWith(4, LoggerColor.CREATE, route2FileName);
-    expect(consoleLogSpy).toHaveBeenNthCalledWith(5, LoggerColor.CREATE, "index.js");
-    // TODO: alterar quando o update tiver pronto
-    // expect(consoleLogSpy).toHaveBeenNthCalledWith(5, LoggerColor.UPDATE, "index.js");
+    expect(consoleLogSpy).toHaveBeenNthCalledWith(5, LoggerColor.UPDATE, "index.js");
 
     const mainRouteContent = await filesManagerService.readFile(mainRouteFilePath)
     expect(mainRouteContent).toContain(generateImportCodeLine(route1))

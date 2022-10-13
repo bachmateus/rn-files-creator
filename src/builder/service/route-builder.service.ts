@@ -84,7 +84,7 @@ export class RouteBuilderService {
     const lineOfNavigatorContentTag = this.getLineNumberFromLastOcorrency(codeLines, nestedRouteTagReference)
     codeLines?.splice(lineOfNavigatorContentTag+1, 0, generateJsxCodeLine(routeName, !nestedRouteName));
 
-    return await this.filesManagerService.writeFile(userProjectDirectory.route, routeFileName, codeLines?.join('\n')) 
+    return await this.filesManagerService.updateFile(userProjectDirectory.route, routeFileName, codeLines?.join('\n')) 
   }
 
   private getLineNumberFromLastOcorrency(codeLines: string[], textToFind: string): number {

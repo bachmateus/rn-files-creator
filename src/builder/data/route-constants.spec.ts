@@ -1,4 +1,4 @@
-import { generateRouteNameFile, getRouteNameByFileName } from './route-words-to-rename';
+import { generateRouteNameFile, getRouteNameByFileName } from './route-constants';
 
 describe('route-words-rename', () => {
   describe('generateRouteNameFile', () => {
