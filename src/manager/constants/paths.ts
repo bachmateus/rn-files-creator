@@ -5,7 +5,7 @@ export const userProjectPath = process.env.NODE_ENVIRONMENT ? `${process.cwd()}\
 export const cliPath = path.resolve(
   __dirname.substring(__dirname.indexOf('\/') + 1),
   process.env.NODE_ENVIRONMENT ? '..\/..\/..\/src' : '..\/..\/..\/build'
-).replace(userProjectPath, '');
+).replace(process.cwd(), '');
 
 export const userProjectDirectory = {
   component: `${userProjectPath}\/src\/components\/`,
