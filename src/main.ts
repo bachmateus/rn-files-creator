@@ -1,10 +1,10 @@
 import { componentCliService, routeCliService, rnFilesCreatorConfigFileService, screenCliService, userPromptedArgsCliService } from "./cli/cli.module";
 import { helpCliService } from "./cli/cli.module";
 import { routesTypesEnum } from "./cli/data/args-cli-options";
-// import { packagesManagerService } from "./manager/manager.module";
+import { packagesManagerService } from "./manager/manager.module";
 
 export async function cli(args:string[]) {
-  // await packagesManagerService.isReactNativeProject(); 
+  await packagesManagerService.isReactNativeProject(); 
   
   const userPromptedArgs = await userPromptedArgsCliService.handleGetUserPromptedArgs(args);
   if (!userPromptedArgs) return;
