@@ -11,11 +11,11 @@ export const componentFilesToCopy = {
   },
   TypeScript: {
     StyleSheet: [
-      { templateFileName: 'index.StyleSheet.ts', fileName: 'index.ts', shallRename: true },
+      { templateFileName: 'index.StyleSheet.ts', fileName: 'index.tsx', shallRename: true },
       { templateFileName: 'styles.StyleSheet.js', fileName: 'styles.ts', shallRename: false },
     ],
     'styled-component': [
-      { templateFileName: 'index.StyledComponent.ts', fileName: 'index.ts', shallRename: true },
+      { templateFileName: 'index.StyledComponent.ts', fileName: 'index.tsx', shallRename: true },
       { templateFileName: 'styles.StyledComponent.js', fileName: 'styles.ts', shallRename: false },
     ]
   },

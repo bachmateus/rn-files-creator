@@ -1,6 +1,6 @@
 {
   "name": "@bachmateus/rn-files-creator",
-  "version": "2.0.4",
+  "version": "2.1.1",
   "description": "rn-files-creator make easier to create new React Native components files. It provides a basic file structure for your components with StyleSheet or StyledComponent.",
   "main": "src/main.js",
   "bin": {
@@ -10,18 +10,22 @@
   "publishConfig": {
     "access": "public"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bachmateus/rn-files-creator.git"
+  },
   "scripts": {
-    "start": "SET NODE_ENVIRONMENT=development & ts-node dev/index.ts",
-    "start:dev": "SET NODE_ENVIRONMENT=development & npx nodemon dev/index.ts",
-    "build": "npx tsc -p tsconfig-build.json & npm run copy:files",
-    "build:dev": "npm run build & npm run copy:files & npm link",
-    "test": "SET NODE_ENVIRONMENT=development & jest --runInBand",
-    "test:watch": "SET NODE_ENVIRONMENT=development & jest --runInBand --watch",
-    "test:coverage": "SET NODE_ENVIRONMENT=development & jest --coverage --runInBand",
-    "copy:files": "npm run copy:template-files & npm run copy:assets-files",
-    "copy:template-files": "cp -R ./src/builder/templates/ ./build/builder/",
+    "start": "env NODE_ENVIRONMENT=development ts-node dev/index.ts",
+    "start:dev": "env NODE_ENVIRONMENT=development npx nodemon dev/index.ts",
+    "build": "npx tsc -p tsconfig-build.json && npm run copy:files",
+    "build:dev": "npm run build && npm link",
+    "test": "env NODE_ENVIRONMENT=development jest --runInBand",
+    "test:watch": "env NODE_ENVIRONMENT=development jest --runInBand --watch",
+    "test:coverage": "env NODE_ENVIRONMENT=development jest --coverage --runInBand",
+    "copy:files": "npm run copy:template-files && npm run copy:assets-files",
+    "copy:template-files": "cp -R ./src/builder/templates/ ./build/builder/templates/",
     "copy:assets-files": "cp -R ./src/cli/assets/ ./build/cli/assets/",
-    "deploy": "npm run build & npm publish"
+    "deploy:npm": "npm run build && npm publish"
   },
   "keywords": [
     "cli",

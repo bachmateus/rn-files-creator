@@ -3,6 +3,7 @@ import { ErrorFileCreated } from '../logger/error-file-created.logger';
 import { FileNotFoundException } from '../logger/file-not-found.logger';
 import { FileNotWrittenException } from '../logger/file-not-written.logger';
 import { SuccessFileCreated } from '../logger/success-file-created.logger';
+import { SuccessFileUpdated } from '../logger/success-file-updated.logger';
 const { mkdir, stat, copyFile, readFile, writeFile, rm } = fs;
 
 export class FilesManagerService {
@@ -47,9 +48,24 @@ export class FilesManagerService {
     }
   }
 
+  async saveOrUpdateFile(directoryPath: string, filePath:string, newContent:string) {
+    await writeFile(directoryPath + filePath, newContent);
+  }
+
+  async updateFile(directoryPath: string, filePath:string, newContent:string): Promise<boolean> {
+    try {
+      await this.saveOrUpdateFile(directoryPath, filePath, newContent);
+      new SuccessFileUpdated(filePath)
+      return true
+    } catch (error) {
+      new FileNotWrittenException(filePath)
+      return false
+    }
+  }
+
   async writeFile(directoryPath: string, filePath:string, newContent:string): Promise<boolean> {
     try {
-      await writeFile(directoryPath + filePath, newContent);
+      await this.saveOrUpdateFile(directoryPath, filePath, newContent);
       new SuccessFileCreated(filePath)
       return true
     } catch (error) {

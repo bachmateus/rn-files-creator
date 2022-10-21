@@ -40,8 +40,8 @@ export class UserPromptedArgsCliService {
       isHelp: args['-h'] || false,
       component: args['-c'] || undefined,
       screen: args['-s'] || undefined,
-      navigator: args['-n'] || undefined,
-      navigatorsType: args['-t'] || undefined,
+      route: args['-r'] || undefined,
+      routeType: args['-t'] || undefined,
       includeOn: args['-i'] || undefined,
     }
   }
@@ -51,13 +51,14 @@ export class UserPromptedArgsCliService {
    * @returns {IArgsCliOptions} an object with the arg that the user typed
    */
   async validateUsersArg(usersArgs: IArgsCliOptions): Promise<IArgsCliOptions> {
-    const {isHelp, component, screen, navigator} = usersArgs;
-    const haveACreator = [component, screen, navigator].some(item=>item) 
+    const {isHelp, component, screen, route} = usersArgs;
+    const haveACreator = [component, screen, route].some(item=>item) 
     if (haveACreator) return usersArgs;
     if (isHelp) return usersArgs;
     const userPromptedArgsCliView = new UserPromptedArgsCliView();
     const creator = await userPromptedArgsCliView.askForMissingParams() as CreatorType;
-    usersArgs[creator] = [];
+    if (creator === 'component' || creator === 'screen') usersArgs[creator] = [];
+    else usersArgs[creator] = "";
     return usersArgs
   }
 

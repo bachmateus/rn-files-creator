@@ -5,16 +5,18 @@ export const defaultArgsPrompt = [
 
 const commands = {
   empty: "rn",
-  createComponent: "rn -c Component1 -i Login -h",
+  createComponent: "rn -c Component1 -c Component2",
   createComponentShort: "rn --screen A4 --component A4",
-  createNavigator: "rn -n Login -n Logged -t stack -i MainNavigator -aaps",
-  // createNavigatorShort: "rn -c Component1",
+  createRoute: "rn -r RecipeRoutes -t bottomTab",
+  // createRoute: "rn -r Login -r Logged -t stack -i MainRoute -aaps",
+  // createRoute: "rn -r Login -r Logged -t stack -i MainRoute -aaps",
+  // createRouteShort: "rn -c Component1",
 }
 
-const argCommand = commands.createComponentShort.split(' ');
+const argCommand = commands.createRoute.split(' ');
 // const argCommand = commands.createComponent.split(' ');
 // const argCommand = commands.empty.split(' ');
-// const argCommand = commands.createNavigator.split(' ');
+// const argCommand = commands.createRoute.split(' ');
 argCommand.shift();
 
 export const args = [...defaultArgsPrompt, ...argCommand];

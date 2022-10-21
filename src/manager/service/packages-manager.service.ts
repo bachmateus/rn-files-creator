@@ -1,4 +1,4 @@
-import { FilesManagerService } from "@bachmateus/rn-files-creator/src/manager/service/files-manager.service";
+import { FilesManagerService } from "../../../src/manager/service/files-manager.service";
 import { userProjectDirectory } from "../constants/paths";
 import { ErrorNotReactNativeProjectLogger } from "../logger/error-not-react-native-project.logger";
 
