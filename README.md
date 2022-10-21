@@ -5,7 +5,7 @@
 
 Works on Windows, Linux and MacOS
 
-![](logo.png)
+Obs: On Linux, sudo command is required
 
 # CAUTION
 DO NOT use this project in a production project due to it still being under development
@@ -20,8 +20,8 @@ You can install via npm:
 # Features
 Create React Native files.
 
-1. Create component/screen files using JavaScript.
-2. Create component/screen files using TypeScript.
+1. Create component/screen/route files using JavaScript.
+2. Create component/screen/route files using TypeScript.
 3. Create a config file to store your preferences.
 
 # Project folders structure
@@ -37,6 +37,9 @@ Create React Native files.
           +-- ScreenName
               +-- index.js
               +-- styles.js
+      +-- routes
+          +-- index.js
+          +-- route-name.routes.js
   +-- rn-files-creator.json
   ```
 
@@ -44,34 +47,51 @@ Create React Native files.
 # Usage
 The basic use of rn-file-creator is  :
   ```bash
-  rn -command componentName [otherComponentName]
+  rn -command [ComponentName] [otherComponentName]
   ```
 
 ## Creating a Component
 Type the following command to create a component 
 
   ```bash
-  rn -c ComponentName
+  rn -c [ComponentName]
   ```
 
 You can use more than one arg per time to create more than one component
 
   ```bash
-  rn -c ComponentName1 -c ComponentName2 -c ComponentName3 -c ComponentName4
+  rn -c [ComponentName1] -c [ComponentName2] -c [ComponentName3] -c [ComponentName4]
   ```
 
 ## Creating a Screen
 Type the following command to create a screen 
 
   ```bash
-  rn -s ScreenName
+  rn -s [ScreenName]
   ```
 
 You can use more than one arg per time to create more than one screen
 
   ```bash
-  rn -s ScreenName1 -s ScreenName2 -s ScreenName3 -s ScreenName4
+  rn -s [ScreenName1] -s [ScreenName2] -s [ScreenName3] -s [ScreenName4]
   ```
+
+## Creating a route
+Type the following command to create a route 
+
+  ```bash
+  rn -r [RouteName]
+  ```
+
+You can specify a navigator type (stack, bottomTab or drawer) passing -t param.
+  
+  ```bash
+  rn -r [RouteName] -t [NavigatorType]
+  ```
+
+Obs: If you don't specify the navigator type it will be asked to you.
+
+Each created route is included on main route (index file). This file is generated automaticaly.
 
 ## Creating guide
 You can follow the guide to create a component if you do not want to type the entire command.
@@ -89,6 +109,7 @@ After typing enter just follow the guide.
 | ----------------- | ------------------------------------------------------------- |
 | -c, --component   | Create one or more components                                 |
 | -h, --help        | Show possible commands                                        |
+| -r, --route       | Create one route                                              |
 | -s, --screen      | Create one or more screens                                    |
 
 # Inspiration

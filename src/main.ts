@@ -1,9 +1,11 @@
-import { componentCliService, rnFilesCreatorConfigFileService, screenCliService, userPromptedArgsCliService } from "./cli/cli.module";
+import { componentCliService, routeCliService, rnFilesCreatorConfigFileService, screenCliService, userPromptedArgsCliService } from "./cli/cli.module";
 import { helpCliService } from "./cli/cli.module";
+import { routesTypesEnum } from "./cli/data/args-cli-options";
+import { packagesManagerService } from "./manager/manager.module";
 
 export async function cli(args:string[]) {
-  // TODO: to be created
-  // const isReactNativeProject = libManagerService.isReactNativeProject(); 
+  await packagesManagerService.isReactNativeProject(); 
+  
   const userPromptedArgs = await userPromptedArgsCliService.handleGetUserPromptedArgs(args);
   if (!userPromptedArgs) return;
   
@@ -21,9 +23,11 @@ export async function cli(args:string[]) {
   if (userPromptedArgs.screen)
     await screenCliService.handler({screens: userPromptedArgs.screen}, projectConfig)
   
-  // TODO: create navigator flow
-  // if (userPromptedArgs.screen)
-    // await componentCliService.handler({components: userPromptedArgs.component}, projectConfig)
-  
+  // TODO: create route flow
+  if (userPromptedArgs.route || userPromptedArgs.route === ''){
+    const route = userPromptedArgs.route;
+    const routeType= (userPromptedArgs.routeType) ? userPromptedArgs.routeType : "" as routesTypesEnum;
+    await routeCliService.handler({route, routeType}, projectConfig)
+  }
   return true
 }
